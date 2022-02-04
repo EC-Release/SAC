@@ -1,0 +1,9 @@
+[package]
+name = "ec_sac_beta"
+version = "0.1.1"
+edition = "2018"
+publish = false
+
+[dependencies]
+#rocket = { path = "../../core/lib" }
+rocket = "0.4.10"
