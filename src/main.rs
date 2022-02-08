@@ -27,6 +27,9 @@ fn main() {
     //get owner hash
     let ops = env::var(PPS).is_err();
     
+    //using the libra lib will be ingested in build time
+    //https://github.com/LIBRA-Release/lib-rust/blob/main/src/lib.rs
+    
     //schedule hash refreshment
     libra::generate_passphrase(ops);
     libra::sched_refresh_passphrase();
