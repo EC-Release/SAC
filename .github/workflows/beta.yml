@@ -21,6 +21,6 @@ jobs:
           override: true
       - name: Building SAC
         run: |
-          //get libra
+          #get libra
           git clone https://github.com/LIBRA-Release/libra.git
           cargo build --release --all-features && tree .
