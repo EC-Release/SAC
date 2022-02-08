@@ -23,7 +23,7 @@ fn hello(name: String, age: u8) -> String {
 const PPS: &str = "EC_PPS";
 
 fn main() {
-    let query = "duct";
+    
     //get owner hash
     let ops = env::var(PPS).is_err();
     
