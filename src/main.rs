@@ -12,8 +12,9 @@
 
 use std::env;
 
-#![feature(proc_macro_hygiene, decl_macro)]
-#[macro_use] extern crate rocket;
+//#![feature(proc_macro_hygiene, decl_macro)]
+//#[macro_use] extern crate rocket;
+extern crate rocket;
 
 #[get("/<name>/<age>")]
 fn hello(name: String, age: u8) -> String {
