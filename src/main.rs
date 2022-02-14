@@ -25,25 +25,25 @@ const PPS: &str = "EC_PPS";
 fn main() {
     
     //get owner hash
-    let ops = env::var(PPS).is_err();
+    //let ops = env::var(PPS).is_err();
     
     //using the libra lib will be ingested in build time
     //https://github.com/LIBRA-Release/lib-rust/blob/main/src/lib.rs
     
     //schedule hash refreshment
-    libra::generate_passphrase(ops);
-    libra::sched_refresh_passphrase();
+    //libra::generate_passphrase(ops);
+    //libra::sched_refresh_passphrase();
     
     //join cluster; establish dbset
-    let sdr = libra::seeder();
-    sdr.Init();
+    //let sdr = libra::seeder();
+    //sdr.Init();
     
-    sdr.tkn_validation();
+    //sdr.tkn_validation();
     
     //establish in-memory mapping detail
-    sdr.add_db(String: "key", String: "value");
-    sdr.get_db(String: "key");
-    sdr.delete_db(String: "key");
+    //sdr.add_db(String: "key", String: "value");
+    //sdr.get_db(String: "key");
+    //sdr.delete_db(String: "key");
     
        
     rocket::ignite().mount("/hello", routes![hello]).launch();
