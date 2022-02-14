@@ -10,9 +10,9 @@
  * author: apolo.yasuda@ge.com
  */
 
-use std::env;
+//use std::env;
 
-//#![feature(proc_macro_hygiene, decl_macro)]
+#![feature(proc_macro_hygiene, decl_macro)]
 #[macro_use] extern crate rocket;
 
 #[get("/<name>/<age>")]
