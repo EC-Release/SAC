@@ -14,7 +14,7 @@ FROM rust:slim
 USER root
 WORKDIR /root
 
-COPY ./index.sh
+COPY ./index.sh ./
 
 RUN chmod +x ./index.sh
 
