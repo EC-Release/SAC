@@ -19,7 +19,7 @@ jobs:
    
       - name: Container Test
         run: |
-          docker run -t $SAC_BUILD_TAG ls -al
+          docker run -t $MY_REGISTRY_TAG ls -al
       - name: Container Images Deployment
         env:
           MY_REGISTRY_ID: ${{secrets.MY_GITHUB_ID}}
