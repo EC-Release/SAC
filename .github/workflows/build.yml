@@ -18,8 +18,6 @@ jobs:
           cd ./spec/build && docker build -t $MY_REGISTRY_TAG . && cd -
    
       - name: Container Test
-        #env:
-        #  EC_PPS: ${{secrets.EC_PPS_2_DECRYPT_213}}
         run: |
           docker run -t $SAC_BUILD_TAG ls -al
       - name: Container Images Deployment
