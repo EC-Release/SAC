@@ -19,7 +19,7 @@ jobs:
    
       - name: Container Test
         run: |
-          docker run -it $MY_REGISTRY_TAG tree .
+          docker run $MY_REGISTRY_TAG tree .
       - name: Container Images Deployment
         env:
           MY_REGISTRY_ID: ${{secrets.MY_GITHUB_ID}}
