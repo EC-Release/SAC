@@ -16,6 +16,8 @@ WORKDIR /root
 
 COPY ./index.sh ./
 
+RUN apt-get update && apt-get install wget
+
 RUN chmod +x ./index.sh
 
 ENTRYPOINT ["./index.sh"]
