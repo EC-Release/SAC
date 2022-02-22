@@ -16,17 +16,35 @@ function int_a () {
 
   if [[ -z $EXEC_DAT ]]; then
     printf "empty request."
-    exit -1
+    return -1
   fi
   
   STATUS=$(curl -s -o /dev/null -w "%{http_code}" $3
   if [ $STATUS != "200"* ]; then
     printf "%s" "{\"error\":\"error from aws token verification.\"}"
-    exit -1
+    return -1
   else
-    echo "Got 200! proceeding to next step..."
-    printf "%s" "{\"decision\":\"PERMIT\"}";
-    exit 0      
+    echo "check if Cognito-userpool key exists in the map"
+    ref=$(key_exists $1 $2)
+    if [[ $ref != 0 ]]; then
+      printf "key does not exist in the map."
+      return -1
+    fi
+    echo "check svc-id now"
+    printf "%s" "{\"decision\":\"PERMIT\"}"
+    return 0      
   fi
   
+}
+
+# Check if Cognito-userpool key exists
+# Usage: array_key_exists $array_name $key
+# Returns: 0 = key exists, 1 = key does NOT exist
+function key_exists() {
+    local _array_name="$1"
+    local _key="$2"
+    local _cmd='echo ${!'$_array_name'[@]}'
+    local _array_keys=($(eval $_cmd))
+    local _key_exists=$(echo " ${_array_keys[@]} " | grep " $_key " &>/dev/null; echo $?)
+    [[ "$_key_exists" = "0" ]] && return 0 || return 1
 }
