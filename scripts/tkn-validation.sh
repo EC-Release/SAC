@@ -8,33 +8,50 @@
 #  with the terms and conditions stipulated in the agreement/contract
 #  under which the software has been supplied.
 #
+
+#validate params
+# $1: <EXEC_DAT>
+function validate_params () {
+  if [[ -z $EXEC_DAT ]]; then
+    printf "%s" "{\"error\":\"empty request.\"}"
+    return -1
+  fi
+  echo "EXEC_DAT"=$1
+  region=$(echo $1 | jq -r .region)
+  userPoolId=$(echo $1 | jq -r .userPoolId)
+  svcId==$(echo $1 | jq -r .svcId)
+  if [[ -z ${region} || -z ${userPoolId} || -z ${svcId} ]]; then
+    printf "%s" "{\"error\":\"one or more required values are missing.\"}"
+    return -1
+  fi
+  url = ${idp}.${region}.${domain}/${userPoolId}/.well-known/jwks.json
+  return 0
+}
+
 # verify the Cognito token and validate service-id from the map
 # $1: <EXEC_DAT>
 # $2: <EXEC_MAP>
 # $3: <EXEC_URL>
 function int_a () {
-
-  if [[ -z $EXEC_DAT ]]; then
-    printf "empty request."
-    return -1
-  fi
-  
-  STATUS=$(curl -s -o /dev/null -w "%{http_code}" $3
-  if [ $STATUS != "200"* ]; then
-    printf "%s" "{\"error\":\"error from aws token verification.\"}"
-    return -1
-  else
-    echo "check if Cognito-userpool key exists in the map"
-    if [[ "$(key_exists $1 $2; echo $?)" = "0" ]]; then
-        if printf '%s\n' "${_array_name[@]}" | grep -Fxq 'svc-id'; then
-          printf "%s" "{\"decision\":\"PERMIT\"}"
-        fi
-        
+  if [[ "${validate_params}" = "0"} ]]; then
+    
+    STATUS=$(curl -s -o /dev/null -w "%{http_code}" $3
+    if [ $STATUS != "200"* ]; then
+      printf "%s" "{\"error\":\"error from aws token verification.\"}"
+      return -1
     else
-        printf "%s" "{\"error\":\"Cognito-userpool key does not exist in the map.\"}"
+      echo "check if Cognito-userpool key exists in the map"
+      if [[ "$(key_exists $1 $2; echo $?)" = "0" ]]; then
+          if printf '%s\n' "${_array_name[@]}" | grep -Fxq 'svc-id'; then
+            printf "%s" "{\"decision\":\"PERMIT\"}"
+          fi
+
+      else
+          printf "%s" "{\"error\":\"Cognito-userpool key does not exist in the map.\"}"
+      fi
+
+      return 0      
     fi
-        
-    return 0      
   fi
   
 }
