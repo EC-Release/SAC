@@ -26,7 +26,7 @@ function int_a () {
   else
     echo "check if Cognito-userpool key exists in the map"
     if [[ "$(key_exists $1 $2; echo $?)" = "0" ]]; then
-        if printf '%s\n' "${myarray[@]}" | grep -Fxq 'myvalue'; then
+        if printf '%s\n' "${_array_name[@]}" | grep -Fxq 'svc-id'; then
           printf "%s" "{\"decision\":\"PERMIT\"}"
         fi
         
