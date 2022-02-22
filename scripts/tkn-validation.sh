@@ -22,6 +22,7 @@ function int_a () {
   STATUS=$(curl -s -o /dev/null -w "%{http_code}" $3
   if [ $STATUS != "200"* ]; then
     echo "Got $STATUS : invalid region or userpool"
+    return
   else
     echo "Got 200! proceeding to next step..."
     return      
