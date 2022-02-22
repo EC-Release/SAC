@@ -15,13 +15,13 @@ USER root
 WORKDIR /root
 
 COPY ./index.sh ./
-COPY . /Cargo.toml ./sac/
+COPY ./../../ ./sac/
 
 RUN apt-get update && apt-get install -y wget tree
 
 RUN rustup override set nightly && \
 cargo install cargo-build-deps && \
-cd ./sac && cargo build-deps --release && \
+cd ./sac && cargo build --release && \
 cd -
 
 RUN chmod +x ./index.sh
