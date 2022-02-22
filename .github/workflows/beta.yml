@@ -15,10 +15,10 @@ jobs:
       AGENT_REV: "temp"
     steps:
       - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly #stable
-          override: true
+      #- uses: actions-rs/toolchain@v1
+      #  with:
+      #    toolchain: nightly #stable
+      #    override: true
       - name: Building SAC
         run: |
           #get libra
