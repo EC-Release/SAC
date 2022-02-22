@@ -7,3 +7,6 @@ publish = false
 [dependencies]
 #rocket = { path = "../../core/lib" }
 rocket = "0.4.10"
+
+[[bin]]
+name = "sac"
