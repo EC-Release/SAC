@@ -16,16 +16,17 @@ function int_a () {
 
   if [[ -z $EXEC_DAT ]]; then
     printf "empty request."
-    return
+    exit -1
   fi
   
   STATUS=$(curl -s -o /dev/null -w "%{http_code}" $3
   if [ $STATUS != "200"* ]; then
-    echo "Got $STATUS : invalid region or userpool"
-    return
+    printf "%s" "{\"error\":\"error from aws token verification.\"}"
+    exit -1
   else
     echo "Got 200! proceeding to next step..."
-    return      
+    printf "%s" "{\"decision\":\"PERMIT\"}";
+    exit 0      
   fi
   
 }
