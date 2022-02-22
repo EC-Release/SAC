@@ -15,7 +15,9 @@ jobs:
 
       - name: Container Img Building
         run: |
-          cd ./spec/build && cp ./../../Cargo.toml ./ && docker build -t $MY_REGISTRY_TAG . && cd -
+          cd ./spec/build && cp -R ./../../src ./src && \
+          cp ./../../Cargo.toml ./ && \
+          docker build -t $MY_REGISTRY_TAG . && cd -
    
       #- name: Container Test
       #  run: |
