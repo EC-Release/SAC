@@ -11,18 +11,20 @@
 # verify the Cognito token and validate service-id from the map
 # $1: <EXEC_DAT>
 # $2: <EXEC_MAP>
+# $3: <EXEC_URL>
 function int_a () {
 
   if [[ -z $EXEC_DAT ]]; then
     printf "empty request."
     return
+  fi
+  
+  STATUS=$(curl -s -o /dev/null -w "%{http_code}" $3
+  if [ $STATUS != "200"* ]; then
+    echo "Got $STATUS : invalid region or userpool"
   else
-    STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json)
-    if [ $STATUS -eq 200 ]; then
-      echo "Got 200! proceeding to next step..."
-    else
-      echo "Got $STATUS : invalid token"
-      return      
+    echo "Got 200! proceeding to next step..."
+    return      
   fi
   
 }
