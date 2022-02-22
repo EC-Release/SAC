@@ -33,6 +33,8 @@ function validate_params () {
 # $2: <EXEC_MAP>
 # $3: <EXEC_URL>
 function int_a () {
+  printf "{\"hello2\":\"world2\",\"dataFromrRequest\":%s,\"appParams\":%s}" "$1" "$2"
+  exit 0
   if [[ "${validate_params}" = "0"} ]]; then
     
     STATUS=$(curl -s -o /dev/null -w "%{http_code}" $3
