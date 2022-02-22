@@ -11,7 +11,7 @@
 
 #validate params
 # $1: <EXEC_DAT>
-function validate_params () {
+: 'function validate_params () {
   if [[ -z $EXEC_DAT ]]; then
     printf "%s" "{\"error\":\"empty request.\"}"
     return -1
@@ -26,7 +26,7 @@ function validate_params () {
   fi
   url = ${idp}.${region}.${domain}/${userPoolId}/.well-known/jwks.json
   return 0
-}
+}'
 
 # verify the Cognito token and validate service-id from the map
 # $1: <EXEC_DAT>
@@ -35,37 +35,37 @@ function validate_params () {
 function int_a () {
   printf "{\"hello2\":\"world2\",\"dataFromrRequest\":%s,\"appParams\":%s}" "$1" "$2"
   exit 0
-  if [[ "${validate_params}" = "0"} ]]; then
+#  if [[ "${validate_params}" = "0"} ]]; then
     
-    STATUS=$(curl -s -o /dev/null -w "%{http_code}" $3
-    if [ $STATUS != "200"* ]; then
-      printf "%s" "{\"error\":\"error from aws token verification.\"}"
-      return -1
-    else
-      echo "check if Cognito-userpool key exists in the map"
-      if [[ "$(key_exists $1 $2; echo $?)" = "0" ]]; then
-          if printf '%s\n' "${_array_name[@]}" | grep -Fxq 'svc-id'; then
-            printf "%s" "{\"decision\":\"PERMIT\"}"
-          fi
+#    STATUS=$(curl -s -o /dev/null -w "%{http_code}" $3
+#    if [ $STATUS != "200"* ]; then
+#      printf "%s" "{\"error\":\"error from aws token verification.\"}"
+#      return -1
+#    else
+#      echo "check if Cognito-userpool key exists in the map"
+#      if [[ "$(key_exists $1 $2; echo $?)" = "0" ]]; then
+#          if printf '%s\n' "${_array_name[@]}" | grep -Fxq 'svc-id'; then
+#            printf "%s" "{\"decision\":\"PERMIT\"}"
+#          fi
 
-      else
+: '      else
           printf "%s" "{\"error\":\"Cognito-userpool key does not exist in the map.\"}"
       fi
 
       return 0      
     fi
-  fi
+  fi'
   
 }
 
 # Check if Cognito-userpool key exists
 # Usage: array_key_exists $array_name $key
 # Returns: 0 = key exists, 1 = key does NOT exist
-function key_exists() {
+: 'function key_exists() {
     local _array_name="$1"
     local _key="$2"
     local _cmd='echo ${!'$_array_name'[@]}'
     local _array_keys=($(eval $_cmd))
     local _key_exists=$(echo " ${_array_keys[@]} " | grep " $_key " &>/dev/null; echo $?)
     [[ "$_key_exists" = "0" ]] && return 0 || return 1
-}
+}'
