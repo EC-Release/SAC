@@ -20,6 +20,7 @@ COPY . /Cargo.toml ./sac/
 RUN apt-get update && apt-get install -y wget tree
 
 RUN rustup override set nightly && \
+cargo install cargo-build-deps && \
 cd ./sac && cargo build-deps --release && \
 cd -
 
