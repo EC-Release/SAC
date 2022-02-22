@@ -23,4 +23,5 @@ jobs:
         run: |
           #get libra
           git clone https://github.com/LIBRA-Release/libra.git
-          cargo build --release --all-features && tree .
+          docker run -v $(pwd):/root/sac ghcr.io/ec-release/build:v2-sac 
+          #cargo build --release --all-features && tree .
