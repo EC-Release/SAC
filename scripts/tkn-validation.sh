@@ -25,13 +25,13 @@ function int_a () {
     return -1
   else
     echo "check if Cognito-userpool key exists in the map"
-    ref=$(key_exists $1 $2)
-    if [[ $ref != 0 ]]; then
-      printf "key does not exist in the map."
-      return -1
+    if [[ "$(key_exists $1 $2; echo $?)" = "0" ]]; then
+        echo "check svc-id now"
+        printf "%s" "{\"decision\":\"PERMIT\"}"
+    else
+        printf "%s" "{\"error\":\"Cognito-userpool key does not exist in the map.\"}"
     fi
-    echo "check svc-id now"
-    printf "%s" "{\"decision\":\"PERMIT\"}"
+        
     return 0      
   fi
   
