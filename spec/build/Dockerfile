@@ -15,7 +15,7 @@ USER root
 WORKDIR /root
 
 COPY ./index.sh ./
-COPY ./Cargo.toml ./
+COPY ./spec/build/Cargo.toml ./
 
 RUN apt-get update && apt-get install -y wget tree
 
