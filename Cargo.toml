@@ -1,4 +1,8 @@
-cargo-features = ["rename-dependency"]
+[workspace]
+
+members = [
+    "sac",
+]
 
 [package]
 name = "sac"
