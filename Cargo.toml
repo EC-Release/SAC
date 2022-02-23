@@ -1,4 +1,5 @@
-cargo-features = ["rename-dependency”] 
+cargo-features = ["rename-dependency”]
+
 [package]
 name = "sac"
 version = "0.1.1"
