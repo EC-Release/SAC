@@ -10,15 +10,15 @@
 #  author: apolo.yasuda@ge.com
 #
 
-FROM rust:alpine
+FROM rust:slim
 USER root
 WORKDIR /root
 
 COPY ./index.sh ./Cargo.toml ./
 COPY ./sac/ ./sac/
 
-RUN apk update && apk add wget tree world
-#RUN apt-get update && apt-get install -y wget tree
+#RUN apk update && apk add wget tree world
+RUN apt-get update && apt-get install -y wget tree
 
 RUN tree ./ && rustup override set nightly && \
 cargo build --release && \
