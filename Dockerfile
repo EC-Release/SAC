@@ -15,7 +15,7 @@ USER root
 WORKDIR /root
 
 COPY ./index.sh ./Cargo.toml ./
-COPY ./sac/* ./sac/
+COPY ./sac/ ./sac/
 
 RUN apk update && apk add wget tree
 #RUN apt-get update && apt-get install -y wget tree
