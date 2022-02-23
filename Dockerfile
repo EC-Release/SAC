@@ -17,7 +17,7 @@ WORKDIR /root
 COPY ./index.sh ./Cargo.toml ./
 COPY ./src/* ./sac/src/
 
-RUN apt-get update && apt-get install -y wget tree
+RUN apk update && apk add wget tree
 
 RUN rustup override set nightly && \
 cd ./sac && cargo build --release && \
