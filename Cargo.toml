@@ -1,3 +1,5 @@
+cargo-features = ["rename-dependency"]
+
 [package]
 name = "sac"
 version = "0.1.1"
@@ -8,7 +10,4 @@ publish = false
 #rocket = { path = "../../core/lib" }
 rocket = "0.4.10"
 
-include = [
-  "src/**/*",
-  "Cargo.toml"
-]
+include = ["src/**/*","Cargo.toml"]
