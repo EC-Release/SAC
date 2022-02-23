@@ -20,9 +20,8 @@ COPY ./sac/ ./sac/
 #RUN apk update && apk add wget tree world
 RUN apt-get update && apt-get install -y wget tree
 
-RUN tree ./ && rustup override set nightly && \
-cargo build --release && \
-cd -
+RUN rustup override set nightly && \
+cargo build --release && tree ./
 
 RUN chmod +x ./index.sh
 
