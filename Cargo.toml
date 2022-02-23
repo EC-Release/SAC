@@ -10,4 +10,4 @@ publish = false
 #rocket = { path = "../../core/lib" }
 rocket = "0.4.10"
 
-include = ["src/**/*","Cargo.toml"]
+#include = ["src/**/*","Cargo.toml"]
