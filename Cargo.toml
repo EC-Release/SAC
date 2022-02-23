@@ -1,17 +1,3 @@
 [workspace]
 
-members = [
-    "sac",
-]
-
-[package]
-name = "sac"
-version = "0.1.1"
-edition = "2018"
-publish = false
-
-[dependencies]
-#rocket = { path = "../../core/lib" }
-rocket = "0.4.10"
-
-#include = ["src/**/*","Cargo.toml"]
+members = ["sac",]
