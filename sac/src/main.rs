@@ -25,7 +25,7 @@ const PPS: &str = "EC_PPS";
 fn main() {
     
     //get owner hash
-    let ops = std::env::var(PPS).is_err();
+    //let ops = std::env::var(PPS).is_err();
     
     //using the libra lib will be ingested in build time
     //https://github.com/LIBRA-Release/lib-rust/blob/main/src/lib.rs
