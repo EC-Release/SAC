@@ -20,7 +20,7 @@ COPY ./src/* ./sac/src/
 #RUN apk update && apk add wget tree
 RUN apt-get update && apt-get install -y wget tree
 
-RUN rustup override set nightly && \
+RUN rust -V && rustup override set nightly && \
 cd ./sac && cargo build --release && \
 cd -
 
