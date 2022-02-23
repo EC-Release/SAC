@@ -10,7 +10,7 @@
 #  author: apolo.yasuda@ge.com
 #
 
-FROM rust:latest
+FROM rust:alpine
 USER root
 WORKDIR /root
 
@@ -20,7 +20,7 @@ COPY ./src/* ./sac/src/
 #RUN apk update && apk add wget tree
 RUN apt-get update && apt-get install -y wget tree
 
-RUN rust -V && rustup override set nightly && \
+RUN rust --version && rustup override set nightly && \
 cd ./sac && cargo build --release && \
 cd -
 
