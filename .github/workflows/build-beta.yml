@@ -23,6 +23,6 @@ jobs:
         run: |
           #get libra
           git clone https://github.com/LIBRA-Release/libra.git
-          #docker run -v $(pwd):/root/sac ghcr.io/ec-release/build:v2-sac 
+          docker run -v $(pwd)/sac/src:/root/sac/src ghcr.io/ec-release/build:v2-sac cargo build --release
           #cargo build --release --all-features && tree .
-          docker run --rm --user "$(id -u)":"$(id -g)" -v "$PWD":/usr/ -w /usr/ rust:1.23.0 cargo build --release
+          #docker run --rm --user "$(id -u)":"$(id -g)" -v "$PWD":/usr/ -w /usr/ rust:1.23.0 cargo build --release
