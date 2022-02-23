@@ -10,7 +10,7 @@
 #  author: apolo.yasuda@ge.com
 #
 
-FROM rust:slim
+FROM rust:alpine
 USER root
 WORKDIR /root
 
