@@ -1,0 +1,28 @@
+name: Build SAC (Beta)
+on:
+  workflow_dispatch:
+  push:
+    branches: [ 0.1-b.1, main ]
+  pull_request:
+    branches: [ 0.1-b.1, main ]
+    types: [opened, synchronize]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    environment: beta
+    env:
+      AGENT_REV: "temp"
+    steps:
+      - uses: actions/checkout@v2
+      #- uses: actions-rs/toolchain@v1
+      #  with:
+      #    toolchain: nightly #stable
+      #    override: true
+      - name: Building SAC
+        run: |
+          #get libra
+          git clone https://github.com/LIBRA-Release/libra.git
+          docker run -v $(pwd)/sac/src:/root/sac/src ghcr.io/ec-release/build:v2-sac
+          #cargo build --release --all-features && tree .
+          #docker run --rm --user "$(id -u)":"$(id -g)" -v "$PWD":/usr/ -w /usr/ rust:1.23.0 cargo build --release
