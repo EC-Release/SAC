@@ -19,8 +19,8 @@ function int_a () {
   token=$(echo $1 | jq -r '.token')
   #res=$(echo $2 | jq '.appParams.EC_SVC_MAP | contains("$svcId")')
   map=$(echo $2 | jq -r '.EC_SVC_MAP')
-  res=$(grep "$svcId" map | cut -d':' -f1)
-  
+  #res=$($ jq -r '.EC_SVC_MAP' map |  jq '.[] | contains(.name=="ABC")' | jq -r '.location')
+  res=$(echo "$map" | grep "$svcId" &>/dev/null; echo $?)
   printf "{\"svc\":%s,\"token\":%s,\"map\":%s,\"res\":%s}" "$svcId" "$token" "$map" "$res"
   exit 0 
 }
