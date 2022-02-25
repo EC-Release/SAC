@@ -14,6 +14,7 @@
 # $2: <appParams>
 function int_a () {
   printf "{\"hello2\":\"world2\",\"dataFromRequest\":%s,\"appParams\":%s}" "$1" "$2"
+  printf "{\"req\":%s,\"appParams\":%s}" "$1" "$2"
   exit 0 
 }
 
