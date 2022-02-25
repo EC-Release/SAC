@@ -17,8 +17,10 @@ function int_a () {
   #printf "{\"req\":%s,\"appParams\":%s}" "$1" "$2"
   svcId=$(echo $1 | jq -r '.svcId')
   printf "%s" "$svcId"
-  token=$(echo $1 | jq -r '.token')
-  printf "%s" "$token"
+  res=$(echo $2 | jq '.appParams.EC_SVC_MAP | contains("$svcId")')
+  printf "%s" "$res" 
+  #token=$(echo $1 | jq -r '.token')
+  #printf "%s" "$token"
   exit 0 
 }
 
