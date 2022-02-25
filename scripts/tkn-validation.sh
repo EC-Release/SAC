@@ -26,7 +26,9 @@ function int_a () {
     printf "%s" "{\"error\":\"service-id does not exist in the map.\"}"
     #exit 0
   else
-    printf "%s" "{\"message\":\"service-id exists in the map, proceeding to next step\"}"
+    userpool=$(echo "$map" | cut -d':' -f1)
+    printf "%s" "$userpool"
+    #printf "%s" "{\"message\":\"service-id exists in the map, proceeding to next step\"}"
   fi  
   exit 0 
 }
