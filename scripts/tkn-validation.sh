@@ -22,6 +22,12 @@ function int_a () {
   #res=$($ jq -r '.EC_SVC_MAP' map |  jq '.[] | contains(.name=="ABC")' | jq -r '.location')
   res=$(echo "$map" | grep "$svcId" &>/dev/null; echo $?)
   printf "{\"svc\":%s,\"token\":%s,\"map\":%s,\"res\":%s}" "$svcId" "$token" "$map" "$res"
+  if [[ $res != "0" ]]; then
+    printf "%s" "{\"error\":\"service-id does not exist in the map.\"}"
+    #exit 0
+  else
+    printf "%s" "{\"message\":\"service-id exists in the map, proceeding to next step\"}"
+  fi  
   exit 0 
 }
 
