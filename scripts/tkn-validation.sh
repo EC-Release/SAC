@@ -15,6 +15,8 @@
 function int_a () {
   #printf "{\"hello2\":\"world2\",\"dataFromRequest\":%s,\"appParams\":%s}" "$1" "$2"
   printf "{\"req\":%s,\"appParams\":%s}" "$1" "$2"
+  map=($2 | jq '.EC_SVC_MAP')
+  printf "{\"req\":%s}" $map
   exit 0 
 }
 
