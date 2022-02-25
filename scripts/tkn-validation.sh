@@ -13,7 +13,7 @@
 # $1: <dataFromRequest>
 # $2: <appParams>
 function int_a () {
-  printf "{\"hello2\":\"world2\",\"dataFromRequest\":%s,\"appParams\":%s}" "$1" "$2"
+  #printf "{\"hello2\":\"world2\",\"dataFromRequest\":%s,\"appParams\":%s}" "$1" "$2"
   #printf "{\"req\":%s,\"appParams\":%s}" "$1" "$2"
   svcId=$(echo $1 | jq -r '.svcId')
   token=$(echo $1 | jq -r '.token')
