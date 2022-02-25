@@ -16,7 +16,7 @@ function int_a () {
   printf "{\"hello2\":\"world2\",\"dataFromRequest\":%s,\"appParams\":%s}" "$1" "$2"
   #printf "{\"req\":%s,\"appParams\":%s}" "$1" "$2"
   svcId=$(echo $1 | jq -r '.svcId')
-  #printf "%s" "$svcId"
+  printf "%s" "$svcId"
   #res=$(echo $2 | jq '.appParams.EC_SVC_MAP | contains("$svcId")')
   res=$(echo $2 | jq -r '.EC_SVC_MAP')
   printf "%s" "$res" 
