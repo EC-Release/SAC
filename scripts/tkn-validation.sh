@@ -16,13 +16,12 @@ function int_a () {
   printf "{\"hello2\":\"world2\",\"dataFromRequest\":%s,\"appParams\":%s}" "$1" "$2"
   #printf "{\"req\":%s,\"appParams\":%s}" "$1" "$2"
   svcId=$(echo $1 | jq -r '.svcId')
-  #printf "%s" "$svcId"
   token=$(echo $1 | jq -r '.token')
-  #printf "%s" "$token"
   #res=$(echo $2 | jq '.appParams.EC_SVC_MAP | contains("$svcId")')
-  res=$(echo $2 | jq -r '.EC_SVC_MAP')
-  #printf "%s" "$res" 
-  printf "{\"svc\":%s,\"token\":%s,\"map\":%s}" "$svcId" "$token" "$res"
+  map=$(echo $2 | jq -r '.EC_SVC_MAP')
+  res=$(grep "$svcId" map | cut -d':' -f1)
+  
+  printf "{\"svc\":%s,\"token\":%s,\"map\":%s,\"res\":%s}" "$svcId" "$token" "$map" "$res"
   exit 0 
 }
 
