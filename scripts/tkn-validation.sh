@@ -30,6 +30,9 @@ function int_a () {
     userpool=$(echo "$map" | cut -d':' -f1 | cut -d'"' -f2 | cut -d'"' -f1)
     printf "%s" "$userpool"
     #printf "%s" "{\"message\":\"service-id exists in the map, proceeding to next step\"}"
+    jwtdec=$ jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "$token"
+    #echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
+    printf "%s" "$jwtdec"
   fi  
   exit 0 
 }
