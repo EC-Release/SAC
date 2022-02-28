@@ -18,9 +18,7 @@ function int_a () {
   region=$(echo $1 | jq -r '.region')
   svcId=$(echo $1 | jq -r '.svcId')
   token=$(echo $1 | jq -r '.token')
-  #res=$(echo $2 | jq '.appParams.EC_SVC_MAP | contains("$svcId")')
   map=$(echo $2 | jq -r '.EC_SVC_MAP')
-  #res=$($ jq -r '.EC_SVC_MAP' map |  jq '.[] | contains(.name=="ABC")' | jq -r '.location')
   res=$(echo "$map" | grep "$svcId" &>/dev/null; echo $?)
   printf "{\"region\":%s,\"svc\":%s,\"token\":%s,\"map\":%s,\"res\":%s}" "$region" "$svcId" "$token" "$map" "$res"
   if [[ $res != "0" ]]; then
@@ -31,7 +29,6 @@ function int_a () {
     printf "%s" "$userpool"
     #printf "%s" "{\"message\":\"service-id exists in the map, proceeding to next step\"}"
     jwtdec=$ jq -R 'split(".") | .[0] | @base64d | fromjson' <<< "$token"
-    #echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
     printf "%s" "$jwtdec"
   fi  
   exit 0 
