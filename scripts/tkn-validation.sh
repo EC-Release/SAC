@@ -22,7 +22,7 @@ function int_a () {
   res=$(echo "$map" | grep "$svcId" &>/dev/null; echo $?)
   #printf "{\"region\":%s,\"svc\":%s,\"token\":%s,\"map\":%s,\"res\":%s}" "$region" "$svcId" "$token" "$map" "$res"
   if [[ $res != "0" ]]; then
-    printf "%s" "{\"error\":\"service-id does not exist in the map.\"}"
+    printf "%s" "{\"error\":\"service-id does not exist in the map.\",\"decision\":\"DENY\"}"
     #exit 0
   else
     userpool=$(echo "$map" | cut -d':' -f1 | cut -d'"' -f2 | cut -d'"' -f1)
@@ -32,6 +32,14 @@ function int_a () {
     kid=$(echo "$jwtdec" | jq -r '.kid')
 
     printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
+    resp=$(curl --location --request GET 'https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json')
+    val_resp=$(echo "$resp" | grep "$kid" &>/dev/null; echo $?)
+    if [[ $val_resp != "0" ]]; then
+      printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
+      exit 1
+    else
+      printf "%s" "{\"decision\":\"PERMIT\"}"
+    fi
     #if [[ ! -z $jwtdec ]]; then
     #  kid=$(echo $jwtdec | jq -r '.kid')
     #  printf "%s" "$kid"
