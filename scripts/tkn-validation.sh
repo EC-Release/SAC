@@ -20,7 +20,7 @@ function int_a () {
   token=$(echo $1 | jq -r '.token')
   map=$(echo $2 | jq -r '.EC_SVC_MAP')
   res=$(echo "$map" | grep "$svcId" &>/dev/null; echo $?)
-  printf "{\"region\":%s,\"svc\":%s,\"token\":%s,\"map\":%s,\"res\":%s}" "$region" "$svcId" "$token" "$map" "$res"
+  #printf "{\"region\":%s,\"svc\":%s,\"token\":%s,\"map\":%s,\"res\":%s}" "$region" "$svcId" "$token" "$map" "$res"
   if [[ $res != "0" ]]; then
     printf "%s" "{\"error\":\"service-id does not exist in the map.\"}"
     #exit 0
