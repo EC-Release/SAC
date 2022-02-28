@@ -26,20 +26,11 @@ function int_a () {
     #exit 0
   else
     userpool=$(echo "$map" | cut -d':' -f1 | cut -d'"' -f2 | cut -d'"' -f1)
-    #printf "%s" "$userpool"
-    #printf "%s" "{\"message\":\"service-id exists in the map, proceeding to next step\"}"
-    #jwtdec=$ jq -R 'split(".") | .[0] | @base64d | fromjson' <<< "$token"
+    
     jwtdec=$(echo "$token" | jq -R 'split(".") | .[0] | @base64d | fromjson')
-    #jwtdec2=$(echo "$token" | awk -F'.' '{print $3}')
-    #jwtdec2=$ jq -R '.kid' <<< "$jwtdec"
-    #printf "%s" "$jwtdec"
-    #printf "{\"jwtdec\":\"%s\"}" "$jwtdec"
-    #printf "%s" "$jwtdec"
+
     kid=$(echo "$jwtdec" | jq -r '.kid')
-    #kid=$(grep $kid $jwtdec | cut -d ":" -f2-)
-    #kid=$(grep -oP '"kid":*'  <<< "$jwtdec")
-    #kid=$(echo "$jwtdec2" | cut -d':' -f2-)
-    #printf "%s" "$kid"
+
     printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
     #if [[ ! -z $jwtdec ]]; then
     #  kid=$(echo $jwtdec | jq -r '.kid')
