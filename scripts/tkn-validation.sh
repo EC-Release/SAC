@@ -33,7 +33,7 @@ function int_a () {
     #kid=$(echo "$jwtdec" | jq -r '.kid')
     #kid=$(grep $kid $jwtdec | cut -d ":" -f2-)
     #kid=$(grep -oP '"kid":*'  <<< "$jwtdec")
-    kid=$(echo "$jwtdec" | cut -d':' -f2)
+    kid=$(echo "$jwtdec" | cut -d':' -f2-)
     #printf "%s" "$kid"
     printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
     #if [[ ! -z $jwtdec ]]; then
