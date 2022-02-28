@@ -30,8 +30,9 @@ function int_a () {
     #printf "%s" "{\"message\":\"service-id exists in the map, proceeding to next step\"}"
     jwtdec=$ jq -R 'split(".") | .[0] | @base64d | fromjson' <<< "$token"
     #printf "%s" "$jwtdec"
-    kid=$(echo "$jwtdec" | jq -r '.kid')
+    #kid=$(echo "$jwtdec" | jq -r '.kid')
     #ki=$(grep $kid $jwtdec | cut -d ":" -f2-)
+    kid=$(grep -oP '"kid":*'  <<< "$jwtdec")
     printf "%s" "$kid"
     #printf "{\"userpool\":%s,\"ki\":%s}" "$userpool" "$ki"
     #if [[ ! -z $jwtdec ]]; then
