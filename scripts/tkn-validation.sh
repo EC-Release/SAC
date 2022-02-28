@@ -33,13 +33,13 @@ function int_a () {
 
     printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
     resp=$(curl --location --request GET 'https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json')
-    val_resp=$(echo "$resp" | grep "$kid" &>/dev/null; echo $?)
-    if [[ $val_resp != "0" ]]; then
-      printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
-      exit 1
-    else
-      printf "%s" "{\"decision\":\"PERMIT\"}"
-    fi
+    printf "%s" "$resp"
+    #val_resp=$(echo "$resp" | grep "$kid" &>/dev/null; echo $?)
+    #if [[ $val_resp != "0" ]]; then
+    #  printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
+    #else
+    #  printf "%s" "{\"decision\":\"PERMIT\"}"
+    #fi
     #if [[ ! -z $jwtdec ]]; then
     #  kid=$(echo $jwtdec | jq -r '.kid')
     #  printf "%s" "$kid"
