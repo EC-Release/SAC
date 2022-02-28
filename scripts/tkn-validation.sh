@@ -31,7 +31,7 @@ function int_a () {
     jwtdec=$ jq -R 'split(".") | .[0] | @base64d | fromjson' <<< "$token"
     #printf "%s" "$jwtdec"
     kid=$(echo $jwtdec | jq -r '.kid')
-    printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$svcId" "$kid"
+    printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
   fi  
   exit 0 
 }
