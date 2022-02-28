@@ -28,10 +28,11 @@ function int_a () {
     userpool=$(echo "$map" | cut -d':' -f1 | cut -d'"' -f2 | cut -d'"' -f1)
     #printf "%s" "$userpool"
     #printf "%s" "{\"message\":\"service-id exists in the map, proceeding to next step\"}"
-    jwtdec=$ jq -R 'split(".") | .[0] | @base64d | fromjson' <<< "$token"
+    #jwtdec=$ jq -R 'split(".") | .[0] | @base64d | fromjson' <<< "$token"
+    jwtdec=$(echo "$token" | jq -R 'split(".") | .[0] | @base64d | fromjson')
     #jwtdec2=$(echo "$token" | awk -F'.' '{print $3}')
     #jwtdec2=$ jq -R '.kid' <<< "$jwtdec"
-    #printf "%s" "$jwtdec"
+    printf "%s" "$jwtdec"
     #printf "{\"jwtdec\":\"%s\"}" "$jwtdec"
     #printf "%s" "$jwtdec"
     #kid=$(echo "$jwtdec" | jq -r '.kid')
