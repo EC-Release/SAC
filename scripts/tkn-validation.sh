@@ -32,8 +32,8 @@ function int_a () {
     kid=$(echo "$jwtdec" | jq -r '.kid')
 
     printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
-    #resp=$(curl --location --request GET 'https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json')
-    #printf "%s" "$resp"
+    resp=$(curl --location --request GET 'https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json')
+    printf "%s" "$resp"
     #val_resp=$(echo "$resp" | grep "$kid" &>/dev/null; echo $?)
     #if [[ $val_resp != "0" ]]; then
     #  printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
