@@ -32,12 +32,13 @@ function int_a () {
     #jwtdec2=$(echo "$token" | awk -F'.' '{print $3}')
     #jwtdec2=$ jq -R '.kid' <<< "$jwtdec"
     #printf "%s" "$jwtdec"
-    #kid=$(echo "$jwtdec" | jq -r '.kid')
+    printf "{\"jwtdec\":\"%s\"}" "$jwtdec" 
+    kid=$(echo "$jwtdec" | jq -r '.kid')
     #kid=$(grep $kid $jwtdec | cut -d ":" -f2-)
     #kid=$(grep -oP '"kid":*'  <<< "$jwtdec")
-    kid=$(echo "$jwtdec2" | cut -d':' -f2-)
+    #kid=$(echo "$jwtdec2" | cut -d':' -f2-)
     #printf "%s" "$kid"
-    printf "{\"userpool\":%s,\"jwtdec\":%s,\"kid\":%s}" "$userpool" "$jwtdec" "$kid"
+    #printf "{\"userpool\":%s,\"jwtdec\":%s,\"kid\":%s}" "$userpool" "$jwtdec" "$kid"
     #if [[ ! -z $jwtdec ]]; then
     #  kid=$(echo $jwtdec | jq -r '.kid')
     #  printf "%s" "$kid"
