@@ -31,10 +31,10 @@ function int_a () {
     jwtdec=$ jq -R 'split(".") | .[0] | @base64d | fromjson' <<< "$token"
     #printf "%s" "$jwtdec"
     #kid=$(echo "$jwtdec" | jq -r '.kid')
-    #ki=$(grep $kid $jwtdec | cut -d ":" -f2-)
+    #kid=$(grep $kid $jwtdec | cut -d ":" -f2-)
     kid=$(grep -oP '"kid":*'  <<< "$jwtdec")
-    printf "%s" "$kid"
-    #printf "{\"userpool\":%s,\"ki\":%s}" "$userpool" "$ki"
+    #printf "%s" "$kid"
+    printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
     #if [[ ! -z $jwtdec ]]; then
     #  kid=$(echo $jwtdec | jq -r '.kid')
     #  printf "%s" "$kid"
