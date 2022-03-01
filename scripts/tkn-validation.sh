@@ -44,12 +44,9 @@ function int_a () {
     if [[ $val_resp != "0" ]]; then
       printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
       exit 1
-    #else
-    #  printf "%s" "{\"decision\":\"PERMIT\"}"
     fi 
     printf "%s" "{\"decision\":\"PERMIT\"}"
   fi 
-  #printf "%s" "{\"decision\":\"PERMIT\"}"
   exit 0 
 }
 
