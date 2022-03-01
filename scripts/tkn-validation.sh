@@ -33,9 +33,9 @@ function int_a () {
 
     printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
     url=https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json
-    printf "{\"url\":\"%s\"}" "$url"
-    #resp="$(curl -s 'https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json')"
-    #printf "{\"resp\":\"%s\"}" "$resp"
+    #printf "{\"url\":\"%s\"}" "$url"
+    resp="$(curl -s $url)"
+    printf "{\"resp\":\"%s\"}" "${resp}"
     #printf "%s" "$resp"
     #val_resp=$(echo "$resp" | grep "$kid" &>/dev/null; echo $?)
     #if [[ $val_resp != "0" ]]; then
