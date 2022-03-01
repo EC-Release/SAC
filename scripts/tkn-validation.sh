@@ -39,16 +39,17 @@ function int_a () {
     #printf "%s" "$resp"
     val_resp=$(echo "${resp}" | grep "$kid" &>/dev/null; echo $?)
     printf "{\"val_resp\":%s}" "$val_resp"
-    #if [[ $val_resp != "0" ]]; then
-    #  printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
-    #else
-    #  printf "%s" "{\"decision\":\"PERMIT\"}"
-    #fi
+    if [[ $val_resp != "0" ]]; then
+      printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
+    else
+      printf "%s" "{\"decision\":\"PERMIT\"}"
+    fi
     #if [[ ! -z $jwtdec ]]; then
     #  kid=$(echo $jwtdec | jq -r '.kid')
     #  printf "%s" "$kid"
     #fi  
-  fi  
+  fi 
+  #printf "%s" "{\"decision\":\"PERMIT\"}"
   exit 0 
 }
 
