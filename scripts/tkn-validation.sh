@@ -15,6 +15,10 @@
 function int_a () {
   #printf "{\"hello2\":\"world2\",\"dataFromRequest\":%s,\"appParams\":%s}" "$1" "$2"
   #printf "{\"req\":%s,\"appParams\":%s}" "$1" "$2"
+  if [[ -z $1 ]]; then
+    printf "%s" "{\"error\":\"empty request\",\"decision\":\"DENY\"}"
+    exit 1
+  fi
   region=$(echo $1 | jq -r '.region')
   svcId=$(echo $1 | jq -r '.svcId')
   token=$(echo $1 | jq -r '.token')
