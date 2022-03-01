@@ -28,34 +28,27 @@ function int_a () {
   fi  
   map=$(echo $2 | jq -r '.EC_SVC_MAP')
   res=$(echo "$map" | grep "$svcId" &>/dev/null; echo $?)
-  #printf "{\"region\":%s,\"svc\":%s,\"token\":%s,\"map\":%s,\"res\":%s}" "$region" "$svcId" "$token" "$map" "$res"
   if [[ $res != "0" ]]; then
     printf "%s" "{\"error\":\"service-id does not exist in the map.\",\"decision\":\"DENY\"}"
-    #exit 0
+    exit 1
   else
-    userpool=$(echo "$map" | cut -d':' -f1 | cut -d'"' -f2 | cut -d'"' -f1)
-    
+    userpool=$(echo "$map" | cut -d':' -f1 | cut -d'"' -f2 | cut -d'"' -f1)    
     jwtdec=$(echo "$token" | jq -R 'split(".") | .[0] | @base64d | fromjson')
-
     kid=$(echo "$jwtdec" | jq -r '.kid')
-
-    printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
+    #printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
     url=https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json
     #printf "{\"url\":\"%s\"}" "$url"
     resp="$(curl -s $url)"
     #printf "{\"resp\":\"%s\"}" "${resp}"
-    #printf "%s" "$resp"
     val_resp=$(echo "${resp}" | grep "$kid" &>/dev/null; echo $?)
-    printf "{\"val_resp\":%s}" "$val_resp"
+    #printf "{\"val_resp\":%s}" "$val_resp"
+    printf "{\"region\":%s,\"svc\":%s,\"map\":%s,\"res\":%s,\"userpool\":%s,\"kid\":%s,\"val_resp\":%s}" "$region" "$svcId" "$map" "$res" "$userpool" "$kid" "$val_resp"
     if [[ $val_resp != "0" ]]; then
       printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
+      exit 1
     else
       printf "%s" "{\"decision\":\"PERMIT\"}"
-    fi
-    #if [[ ! -z $jwtdec ]]; then
-    #  kid=$(echo $jwtdec | jq -r '.kid')
-    #  printf "%s" "$kid"
-    #fi  
+    fi 
   fi 
   #printf "%s" "{\"decision\":\"PERMIT\"}"
   exit 0 
