@@ -35,9 +35,10 @@ function int_a () {
     url=https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json
     #printf "{\"url\":\"%s\"}" "$url"
     resp="$(curl -s $url)"
-    printf "{\"resp\":\"%s\"}" "${resp}"
+    #printf "{\"resp\":\"%s\"}" "${resp}"
     #printf "%s" "$resp"
-    #val_resp=$(echo "$resp" | grep "$kid" &>/dev/null; echo $?)
+    val_resp=$(echo "${resp}" | grep "$kid" &>/dev/null; echo $?)
+    printf "{\"val_resp\":%s}" "$val_resp"
     #if [[ $val_resp != "0" ]]; then
     #  printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
     #else
