@@ -35,20 +35,19 @@ function int_a () {
     userpool=$(echo "$map" | cut -d':' -f1 | cut -d'"' -f2 | cut -d'"' -f1)    
     jwtdec=$(echo "$token" | jq -R 'split(".") | .[0] | @base64d | fromjson')
     kid=$(echo "$jwtdec" | jq -r '.kid')
-    #printf "{\"userpool\":%s,\"kid\":%s}" "$userpool" "$kid"
     url=https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json
     #printf "{\"url\":\"%s\"}" "$url"
     resp="$(curl -s $url)"
     #printf "{\"resp\":\"%s\"}" "${resp}"
     val_resp=$(echo "${resp}" | grep "$kid" &>/dev/null; echo $?)
-    #printf "{\"val_resp\":%s}" "$val_resp"
     printf "{\"region\":%s,\"svc\":%s,\"map\":%s,\"res\":%s,\"userpool\":%s,\"kid\":%s,\"val_resp\":%s}" "$region" "$svcId" "$map" "$res" "$userpool" "$kid" "$val_resp"
     if [[ $val_resp != "0" ]]; then
       printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
       exit 1
-    else
-      printf "%s" "{\"decision\":\"PERMIT\"}"
+    #else
+    #  printf "%s" "{\"decision\":\"PERMIT\"}"
     fi 
+    printf "%s" "{\"decision\":\"PERMIT\"}"
   fi 
   #printf "%s" "{\"decision\":\"PERMIT\"}"
   exit 0 
