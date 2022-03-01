@@ -22,6 +22,10 @@ function int_a () {
   region=$(echo $1 | jq -r '.region')
   svcId=$(echo $1 | jq -r '.svcId')
   token=$(echo $1 | jq -r '.token')
+  if [[ -z $region || -z $svcId || -z $token ]]; then
+    printf "%s" "{\"error\":\"required parameters missing in the request\",\"decision\":\"DENY\"}"
+    exit 1
+  fi  
   map=$(echo $2 | jq -r '.EC_SVC_MAP')
   res=$(echo "$map" | grep "$svcId" &>/dev/null; echo $?)
   #printf "{\"region\":%s,\"svc\":%s,\"token\":%s,\"map\":%s,\"res\":%s}" "$region" "$svcId" "$token" "$map" "$res"
