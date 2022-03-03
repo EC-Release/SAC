@@ -42,10 +42,10 @@ function int_a () {
     val_resp=$(echo "${resp}" | grep "$kid" &>/dev/null; echo $?)
     printf "{\"region\":%s,\"svc\":%s,\"map\":%s,\"res\":%s,\"userpool\":%s,\"kid\":%s,\"val_resp\":%s}" "$region" "$svcId" "$map" "$res" "$userpool" "$kid" "$val_resp"
     if [[ $val_resp != "0" ]]; then
-      printf "%s\n" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
+      printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
       #exit 0
     fi 
-    printf "%s" "{\"decision\":\"PERMIT\"}"
+    printf "%s\n" "{\"decision\":\"PERMIT\"}"
   fi 
   exit 0 
 }
