@@ -23,6 +23,8 @@ function int_a () {
   if [[ -z $region || -z $svcId || -z $token ]]; then
     printf "%s" "{\"error\":\"required parameters missing in the request\",\"decision\":\"DENY\"}"
   fi  
+  cog_url=$(echo $2 | jq -r '.COGNITO_URL')
+  printf "{\"cog_url\":\"%s\"}" "$cog_url"
   map=$(echo $2 | jq -r '.EC_SVC_MAP')
   res=$(echo "$map" | grep "$svcId" &>/dev/null; echo $?)
   if [[ $res != "0" ]]; then
@@ -32,12 +34,13 @@ function int_a () {
     jwtdec=$(echo "$token" | jq -R 'split(".") | .[0] | @base64d | fromjson')
     kid=$(echo "$jwtdec" | jq -r '.kid')
     url=https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json
+    printf "{\"url\":\"%s\"}" "$url"
     resp="$(curl -s $url)"
     val_resp=$(echo "${resp}" | grep "$kid" &>/dev/null; echo $?)
     if [[ $val_resp != "0" ]]; then
       printf "%s" "{\"error\":\"invalid token.\",\"decision\":\"DENY\"}"
     fi 
-    printf "%s\n" "{\"decision\":\"PERMIT\"}"
+    printf "%s" "{\"decision\":\"PERMIT\"}"
   fi 
   exit 0 
 }
