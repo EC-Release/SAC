@@ -33,9 +33,7 @@ function int_a () {
     userpool=$(echo "$map" | cut -d':' -f1 | cut -d'"' -f2 | cut -d'"' -f1)    
     jwtdec=$(echo "$token" | jq -R 'split(".") | .[0] | @base64d | fromjson')
     kid=$(echo "$jwtdec" | jq -r '.kid')
-    #url=https://cognito-idp.$region.amazonaws.com/$userpool/.well-known/jwks.json
     url=$(printf "$cog_url" "$region" "$userpool")
-    printf "{\"url\":\"%s\"}" "$url"
     resp="$(curl -s $url)"
     val_resp=$(echo "${resp}" | grep "$kid" &>/dev/null; echo $?)
     if [[ $val_resp != "0" ]]; then
