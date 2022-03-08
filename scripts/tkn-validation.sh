@@ -8,6 +8,7 @@
 #  with the terms and conditions stipulated in the agreement/contract
 #  under which the software has been supplied.
 #
+#  author: puja.sharma@ge.com
 
 # Verify the Cognito token and validate service-id from the map
 # $1: <dataFromRequest>
