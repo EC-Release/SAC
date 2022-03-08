@@ -25,7 +25,6 @@ function int_a () {
     printf "%s" "{\"error\":\"required parameters missing in the request\",\"decision\":\"DENY\"}"
   fi  
   cog_url=$(echo $2 | jq -r '.COGNITO_URL')
-  #printf "{\"cog_url\":\"%s\"}" "$cog_url"
   map=$(echo $2 | jq -r '.EC_SVC_MAP')
   res=$(echo "$map" | grep "$svcId" &>/dev/null; echo $?)
   if [[ $res != "0" ]]; then
