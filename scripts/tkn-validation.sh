@@ -18,10 +18,8 @@ function int_a () {
   if [[ -z $1 ]]; then
     printf "%s" "{\"error\":\"empty request\",\"decision\":\"DENY\"}"
   fi
-  #region=$(echo $1 | jq -r '.region')
   svcId=$(echo $1 | jq -r '.svcId')
   token=$(echo $1 | jq -r '.token')
-  #if [[ -z $region || -z $svcId || -z $token ]]; then
   if [[ -z $svcId || -z $token ]]; then
     printf "%s" "{\"error\":\"required parameters missing in the request\",\"decision\":\"DENY\"}"
   fi  
@@ -33,7 +31,6 @@ function int_a () {
   else
     userpool=$(echo "$map" | cut -d':' -f1 | cut -d'"' -f2 | cut -d'"' -f1) 
     region=$(echo "$userpool" | cut -d'_' -f1) 
-    printf "{\"region\":\"%s\"}" "$region"
     jwtdec=$(echo "$token" | jq -R 'split(".") | .[0] | @base64d | fromjson')
     kid=$(echo "$jwtdec" | jq -r '.kid')
     url=$(printf "$cog_url" "$region" "$userpool")
