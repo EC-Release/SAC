@@ -1,4 +1,4 @@
-name: Build SAC Dependency
+name: Publish SAC Dep. Spec
 on:
   workflow_dispatch:
 
