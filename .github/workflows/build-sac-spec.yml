@@ -1,4 +1,4 @@
-name: Publish SAC OCI Specs
+name: Publish SAC Specs
 on:
   workflow_dispatch:
 
