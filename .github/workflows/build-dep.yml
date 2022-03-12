@@ -15,7 +15,7 @@ jobs:
 
       - name: Container Img Building
         run: |
-          docker build -t $MY_REGISTRY_TAG .
+          docker build -f Dockerfile.Dep -t $MY_REGISTRY_TAG .
    
       #- name: Container Test
       #  run: |
