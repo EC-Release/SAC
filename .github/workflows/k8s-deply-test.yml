@@ -1,0 +1,17 @@
+name: SAC K8 Deployment Test
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Start minikube
+      uses: medyagh/setup-minikube@master
+      #uses: manusa/actions-setup-minikube@v2.4.3
+        #with:
+          #minikube version: 'v1.24.0'
+          #kubernetes version: 'v1.23.0'
+          #github token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Deployment Script
+      run: source <(wget -O - https://raw.githubusercontent.com/ayasuda-ge/SAC/main/scripts/k8-installation.sh)
