@@ -1,11 +1,11 @@
 name: Build SAC (Beta)
 on:
   workflow_dispatch:
-  push:
-    branches: [ 0.1-b.1, main ]
-  pull_request:
-    branches: [ 0.1-b.1, main ]
-    types: [opened, synchronize]
+  #push:
+  #  branches: [ 0.1-b.1, main ]
+  #pull_request:
+  #  branches: [ 0.1-b.1, main ]
+  #  types: [opened, synchronize]
 jobs:
   build:
     runs-on: ubuntu-latest
