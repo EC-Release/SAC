@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+data:
+  cid: {{EC_CID}}
+  csc: {{EC_CSC}}
+kind: Secret
+metadata:
+  name: ec-secret
+type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sac-mstr
+  labels:
+    run: sac-mstr
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    protocol: TCP
+    name: https
+  selector:
+    run: sac-mstr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sac-mstr
+spec:
+  selector:
+    matchLabels:
+      run: sac-mstr
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: sac-mstr
+    spec:
+      containers:
+      - name: sac-mstr-cntr
+        image: ghcr.io/ec-release/sac:master
+        env:
+        - name: EC_CID
+          valueFrom:
+            secretKeyRef:
+              name: ec-secret
+              key: cid
+              optional: false
+        - name: EC_CSC
+          valueFrom:
+            secretKeyRef:
+              name: ec-secret
+              key: csc
+              optional: false           
+        ports:
+        - containerPort: 443
+        - containerPort: 80
