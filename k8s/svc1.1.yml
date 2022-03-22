@@ -1,0 +1,56 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {SAC_MSTR_NAME}
+  labels:
+    run: {SAC_MSTR_NAME}
+spec:
+  #clusterIP: None
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 7990
+    protocol: TCP
+    name: http
+  selector:
+    run: {SAC_MSTR_NAME}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {SAC_MSTR_NAME}
+spec:
+  selector:
+    matchLabels:
+      run: {SAC_MSTR_NAME}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: {SAC_MSTR_NAME}
+    spec:
+      containers:
+      - name: {SAC_MSTR_NAME}-cntr
+        image: ghcr.io/ec-release/sac:master
+        env:
+        - name: SAC_TYPE
+          value: master
+        - name: SAC_URL
+          value: http://{SAC_MSTR_NAME}.default.svc.cluster.local
+        - name: EC_PORT
+          value: :7990
+        - name: EC_CID
+          valueFrom:
+            secretKeyRef:
+              name: {K8_SECRT_NAME}
+              key: cid
+              optional: false
+        - name: EC_CSC
+          valueFrom:
+            secretKeyRef:
+              name: {K8_SECRT_NAME}
+              key: csc
+              optional: false           
+        ports:
+        - containerPort: 7990
