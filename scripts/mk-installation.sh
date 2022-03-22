@@ -43,7 +43,7 @@ kubectl config view && kubectl get pods && {
     sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" sac.yaml
     sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" sac.yaml
     
-    curl -Ss -o svc1.1.yml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/svc1.1.yml
+    curl -Ss -o svc1.1.yml https://raw.githubusercontent.com/ayasuda-ge/service1.x/1.1/k8s/svc1.1.yml
     sed -i "" "s|{EC_CID}|$EC_CID|g" svc1.1.yml
     sed -i "" "s|{EC_CSC}|$EC_CSC|g" svc1.1.yml
     sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" svc1.1.yml
