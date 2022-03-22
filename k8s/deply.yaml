@@ -15,6 +15,7 @@ metadata:
   labels:
     run: {{K8_APP_NAME}}
 spec:
+  #clusterIP: None
   type: NodePort
   ports:
   - port: 8080
