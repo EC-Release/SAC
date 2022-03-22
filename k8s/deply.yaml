@@ -5,15 +5,15 @@ data:
   csc: {{EC_CSC}}
 kind: Secret
 metadata:
-  name: ec-secret
+  name: {{K8_SECRT_NAME}}
 type: Opaque
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: sac-mstr
+  name: {{K8_APP_NAME}}
   labels:
-    run: sac-mstr
+    run: {{K8_APP_NAME}}
 spec:
   type: NodePort
   ports:
@@ -25,24 +25,24 @@ spec:
     protocol: TCP
     name: https
   selector:
-    run: sac-mstr
+    run: {{K8_APP_NAME}}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sac-mstr
+  name: {{K8_APP_NAME}}
 spec:
   selector:
     matchLabels:
-      run: sac-mstr
+      run: {{K8_APP_NAME}}
   replicas: 1
   template:
     metadata:
       labels:
-        run: sac-mstr
+        run: {{K8_APP_NAME}}
     spec:
       containers:
-      - name: sac-mstr-cntr
+      - name: {{K8_APP_NAME}}-cntr
         image: ghcr.io/ec-release/sac:master
         env:
         - name: SAC_TYPE
@@ -51,16 +51,16 @@ spec:
           value: http://sac-mstr.default.svc.cluster.local
         - name: EC_PORT
           value: :80
-        - name: EC_CID
+        - name: {{EC_CID}}
           valueFrom:
             secretKeyRef:
-              name: ec-secret
+              name: {{K8_SECRT_NAME}}
               key: cid
               optional: false
-        - name: EC_CSC
+        - name: {{EC_CSC}}
           valueFrom:
             secretKeyRef:
-              name: ec-secret
+              name: {{K8_SECRT_NAME}}
               key: csc
               optional: false           
         ports:
