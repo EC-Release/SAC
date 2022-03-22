@@ -49,7 +49,7 @@ spec:
         - name: SAC_TYPE
           value: master
         - name: SAC_URL
-          value: http://sac-mstr.default.svc.cluster.local
+          value: http://sac-mstr.default.svc.cluster.local:8080
         - name: EC_PORT
           value: :80
         - name: EC_CID
