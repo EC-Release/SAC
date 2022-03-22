@@ -17,8 +17,8 @@ kubectl config view && kubectl get pods && {
     read -p "EC_CSC: " EC_CSC
 
     wget -q -O spec.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/deply.yaml
-    sed -i "s|{{EC_CID}}|$aid|g" spec.yaml
-    sed -i "s|{{EC_CSC}}|$aid|g" spec.yaml
+    sed -i "s|{{EC_CID}}|$EC_CID|g" spec.yaml
+    sed -i "s|{{EC_CSC}}|$EC_CSC|g" spec.yaml
 
     kubectl apply -f spec.yaml
 }
