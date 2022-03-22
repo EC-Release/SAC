@@ -11,13 +11,14 @@
 #  Author: apolo.yasuda@ge.com; apolo.yasuda.ge@gmail.com
 #
 
-kubectl get pods
+kubectl config view && kubectl get pods && {
 
-read -p "EC_CID: " EC_CID
-read -p "EC_CSC: " EC_CSC
+    read -p "EC_CID: " EC_CID
+    read -p "EC_CSC: " EC_CSC
 
-wget -q -O spec.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/deply.yaml
-sed -i "s|{{EC_CID}}|$aid|g" spec.yaml
-sed -i "s|{{EC_CSC}}|$aid|g" spec.yaml
+    wget -q -O spec.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/deply.yaml
+    sed -i "s|{{EC_CID}}|$aid|g" spec.yaml
+    sed -i "s|{{EC_CSC}}|$aid|g" spec.yaml
 
-kubectl apply -f spec.yaml
+    kubectl apply -f spec.yaml
+}
