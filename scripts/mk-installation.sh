@@ -11,14 +11,13 @@
 #  Author: apolo.yasuda@ge.com; apolo.yasuda.ge@gmail.com
 #
 
-if [[ $(type -t insertData) != function ]]; then
-  source <(wget -q -O - https://raw.githubusercontent.com/EC-Release/sdk/disty/scripts/libs/db.sh)
-fi
+kubectl get pods
 
-kubectl get pods -A
-
-printf "\n\n*** EC k8 installation\n\n"
-kubectl config view
+read -p "EC_CID: " EC_CID
+read -p "EC_CSC: " EC_CSC
 
 wget -q -O spec.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/deply.yaml
+sed -i "s|{{EC_CID}}|$aid|g" spec.yaml
+sed -i "s|{{EC_CSC}}|$aid|g" spec.yaml
+
 kubectl apply -f spec.yaml
