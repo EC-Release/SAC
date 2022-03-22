@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {SAC_MSTR_NAME}
+  name: {SVC_APP_NAME}
   labels:
-    run: {SAC_MSTR_NAME}
+    run: {SVC_APP_NAME}
 spec:
   #clusterIP: None
   type: NodePort
@@ -14,30 +14,38 @@ spec:
     protocol: TCP
     name: http
   selector:
-    run: {SAC_MSTR_NAME}
+    run: {SVC_APP_NAME}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {SAC_MSTR_NAME}
+  name: {SVC_APP_NAME}
 spec:
   selector:
     matchLabels:
-      run: {SAC_MSTR_NAME}
+      run: {SVC_APP_NAME}
   replicas: 1
   template:
     metadata:
       labels:
-        run: {SAC_MSTR_NAME}
+        run: {SVC_APP_NAME}
     spec:
       containers:
-      - name: {SAC_MSTR_NAME}-cntr
+      - name: {SVC_APP_NAME}-cntr
         image: ghcr.io/ec-release/sac:master
         env:
-        - name: SAC_TYPE
-          value: master
-        - name: SAC_URL
+        - name: EC_SAC_MSTR_URL
           value: http://{SAC_MSTR_NAME}.default.svc.cluster.local
+        - name: EC_SAC_SLAV_URL
+          value: http://{SAC_SLAV_NAME}.default.svc.cluster.local
+        - name: EC_SVC_URL
+          value: http://{SVC_APP_NAME}.default.svc.cluster.local
+        - name: EC_ADM_TKN
+          value: {EC_ADM_TKN}
+        - name: EC_SETTING
+          value: {EC_SETTING}
+        - name: EC_SVC_ID
+          value: {EC_SVC_ID}
         - name: EC_PORT
           value: :7990
         - name: EC_CID
@@ -54,3 +62,22 @@ spec:
               optional: false           
         ports:
         - containerPort: 7990
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {SVC_APP_NAME}-igs
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: {SVC_APP_NAME}-cls
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {K8_SECRT_NAME}
+            port:
+              number: 80
