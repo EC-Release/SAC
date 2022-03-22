@@ -25,23 +25,6 @@ spec:
   selector:
     run: {SAC_MSTR_NAME}
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: {SAC_SLAV_NAME}
-  labels:
-    run: {SAC_SLAV_NAME}
-spec:
-  #clusterIP: None
-  type: NodePort
-  ports:
-  - port: 80
-    targetPort: 7990
-    protocol: TCP
-    name: http
-  selector:
-    run: {SAC_SLAV_NAME}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -80,6 +63,23 @@ spec:
               optional: false           
         ports:
         - containerPort: 7990
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {SAC_SLAV_NAME}
+  labels:
+    run: {SAC_SLAV_NAME}
+spec:
+  #clusterIP: None
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 7990
+    protocol: TCP
+    name: http
+  selector:
+    run: {SAC_SLAV_NAME}
 ---
 apiVersion: apps/v1
 kind: Deployment
