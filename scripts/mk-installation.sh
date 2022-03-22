@@ -49,6 +49,7 @@ kubectl config view && kubectl get pods && {
     sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" spec-svc.yaml
     sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" spec-svc.yaml
     sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" spec-svc.yaml
+    sed -i "" "s|{SVC_APP_NAME}|$SVC_APP_NAME|g" spec-svc.yaml
     
     sed -i "" "s|{EC_ADM_TKN}|$EC_ADM_TKN|g" spec-svc.yaml
     sed -i "" "s|{EC_SETTING}|$EC_SETTING|g" spec-svc.yaml
