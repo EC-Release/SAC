@@ -52,13 +52,13 @@ spec:
           value: http://sac-mstr.default.svc.cluster.local
         - name: EC_PORT
           value: :80
-        - name: {{EC_CID}}
+        - name: EC_CID
           valueFrom:
             secretKeyRef:
               name: {{K8_SECRT_NAME}}
               key: cid
               optional: false
-        - name: {{EC_CSC}}
+        - name: EC_CSC
           valueFrom:
             secretKeyRef:
               name: {{K8_SECRT_NAME}}
