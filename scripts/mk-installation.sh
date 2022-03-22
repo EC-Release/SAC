@@ -36,27 +36,27 @@ kubectl config view && kubectl get pods && {
     kubectl delete svc "$SAC_SLAV_NAME"
     kubectl delete secrets "$K8_SECRT_NAME"
     
-    curl -Ss -o spec.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/sac.yaml
-    sed -i "" "s|{EC_CID}|$EC_CID|g" spec.yaml
-    sed -i "" "s|{EC_CSC}|$EC_CSC|g" spec.yaml
-    sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" spec.yaml
-    sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" spec.yaml
-    sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" spec.yaml
+    curl -Ss https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/sac.yaml
+    sed -i "" "s|{EC_CID}|$EC_CID|g" sac.yaml
+    sed -i "" "s|{EC_CSC}|$EC_CSC|g" sac.yaml
+    sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" sac.yaml
+    sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" sac.yaml
+    sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" sac.yaml
     
-    curl -Ss -o spec-svc.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/svc1.1.yml
-    sed -i "" "s|{EC_CID}|$EC_CID|g" spec-svc.yaml
-    sed -i "" "s|{EC_CSC}|$EC_CSC|g" spec-svc.yaml
-    sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" spec-svc.yaml
-    sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" spec-svc.yaml
-    sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" spec-svc.yaml
-    sed -i "" "s|{SVC_APP_NAME}|$SVC_APP_NAME|g" spec-svc.yaml
+    curl -Ss https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/svc1.1.yml
+    sed -i "" "s|{EC_CID}|$EC_CID|g" svc1.1.yml
+    sed -i "" "s|{EC_CSC}|$EC_CSC|g" svc1.1.yml
+    sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" svc1.1.yml
+    sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" svc1.1.yml
+    sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" svc1.1.yml
+    sed -i "" "s|{SVC_APP_NAME}|$SVC_APP_NAME|g" svc1.1.yml
     
-    sed -i "" "s|{EC_ADM_TKN}|$EC_ADM_TKN|g" spec-svc.yaml
-    sed -i "" "s|{EC_SETTING}|$EC_SETTING|g" spec-svc.yaml
-    sed -i "" "s|{EC_SVC_ID}|$EC_SVC_ID|g" spec-svc.yaml
+    sed -i "" "s|{EC_ADM_TKN}|$EC_ADM_TKN|g" svc1.1.yml
+    sed -i "" "s|{EC_SETTING}|$EC_SETTING|g" svc1.1.yml
+    sed -i "" "s|{EC_SVC_ID}|$EC_SVC_ID|g" svc1.1.yml
     
-    kubectl apply -f spec.yaml
-    kubectl apply -f spec-svc.yaml
+    kubectl apply -f sac.yaml
+    kubectl apply -f svc1.1.yml
     
     exit 0
 }
