@@ -23,4 +23,8 @@ kubectl config view && kubectl get pods && {
     sed -i "s|{{EC_CSC}}|$EC_CSC|g" spec.yaml
 
     kubectl apply -f spec.yaml
+    
+    exit 0
 }
+
+echo failed k8 deployment
