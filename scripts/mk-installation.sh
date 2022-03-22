@@ -24,7 +24,7 @@ kubectl config view && kubectl get pods && {
     SVC_APP_NAME="svc"
     
     EC_ADM_TKN="my-legacy-admin-token"
-    EC_SETTING=$(printf '{"%s":{"ids":["my-aid-1","my-aid-2"],"trustedIssuerIds":["legacy-cf-uaa-url"]}}' "$EC_SVC_ID" | base64 -w0) 
+    EC_SETTING=$(printf '{"%s":{"ids":["my-aid-1","my-aid-2"],"trustedIssuerIds":["legacy-cf-uaa-url"]}}' "$EC_SVC_ID" | base64 | tr '\n' ' ') 
     EC_SVC_ID="my-test-id"
 
     kubectl delete ingress "${SVC_APP_NAME}"-igs
