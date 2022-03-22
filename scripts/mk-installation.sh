@@ -21,7 +21,15 @@ kubectl config view && kubectl get pods && {
     K8_SECRT_NAME="ec-secret"
     SAC_MSTR_NAME="sac-mstr"
     SAC_SLAV_NAME="sac-slav"
+    SVC_APP_NAME="svc"
+    
+    EC_ADM_TKN="my-legacy-admin-token"
+    EC_SETTING=$(printf '{"%s":{"ids":["my-aid-1","my-aid-2"],"trustedIssuerIds":["legacy-cf-uaa-url"]}}' "$EC_SVC_ID" | base64 -w0) 
+    EC_SVC_ID="my-test-id"
 
+    kubectl delete ingress "${SVC_APP_NAME}"-igs
+    kubectl delete deployments "$SVC_APP_NAME"
+    kubectl delete svc "$SVC_APP_NAME"
     kubectl delete deployments "$SAC_MSTR_NAME"
     kubectl delete svc "$SAC_MSTR_NAME"
     kubectl delete deployments "$SAC_SLAV_NAME"
@@ -35,7 +43,19 @@ kubectl config view && kubectl get pods && {
     sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" spec.yaml
     sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" spec.yaml
     
+    curl -Ss -o spec-svc.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/svc1.1.yml
+    sed -i "" "s|{EC_CID}|$EC_CID|g" spec-svc.yaml
+    sed -i "" "s|{EC_CSC}|$EC_CSC|g" spec-svc.yaml
+    sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" spec-svc.yaml
+    sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" spec-svc.yaml
+    sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" spec-svc.yaml
+    
+    sed -i "" "s|{EC_ADM_TKN}|$EC_ADM_TKN|g" spec-svc.yaml
+    sed -i "" "s|{EC_SETTING}|$EC_SETTING|g" spec-svc.yaml
+    sed -i "" "s|{EC_SVC_ID}|$EC_SVC_ID|g" spec-svc.yaml
+    
     kubectl apply -f spec.yaml
+    kubectl apply -f spec-svc.yaml
     
     exit 0
 }
