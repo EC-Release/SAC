@@ -19,10 +19,13 @@ kubectl config view && kubectl get pods && {
     EC_CSC=$(printf '%s' "$csc" | base64 | tr '\n' ' ')
     
     K8_SECRT_NAME="ec-secret"
-    K8_APP_NAME="sac-mstr"
+    SAC_MSTR_NAME="sac-mstr"
+    SAC_SLAV_NAME="sac-slav"
 
-    kubectl delete deployments "$K8_APP_NAME"
-    kubectl delete svc "$K8_APP_NAME"
+    kubectl delete deployments "$SAC_MSTR_NAME"
+    kubectl delete svc "$SAC_MSTR_NAME"
+    kubectl delete deployments "$SAC_SLAV_NAME"
+    kubectl delete svc "$SAC_SLAV_NAME"
     kubectl delete secrets "$K8_SECRT_NAME"
     
     curl -Ss -o spec.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/deply.yaml
