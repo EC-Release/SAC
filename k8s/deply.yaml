@@ -45,6 +45,12 @@ spec:
       - name: sac-mstr-cntr
         image: ghcr.io/ec-release/sac:master
         env:
+        - name: SAC_TYPE
+          value: master
+        - name: SAC_URL
+          value: http://sac-mstr.default.svc.cluster.local
+        - name: EC_PORT
+          value: :80
         - name: EC_CID
           valueFrom:
             secretKeyRef:
