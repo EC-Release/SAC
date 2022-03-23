@@ -13,8 +13,10 @@
 
 kubectl config view && kubectl get pods && {
     
-    read -p "EC_CID: " cid
-    read -p "EC_CSC: " csc
+    read cid"?EC_CID: "
+    read csc"?EC_CSC: "
+    #read -p "EC_CID: " cid
+    #read -p "EC_CSC: " csc
     EC_CID=$(printf '%s' "$cid" | base64 | tr '\n' ' ')
     EC_CSC=$(printf '%s' "$csc" | base64 | tr '\n' ' ')
     
