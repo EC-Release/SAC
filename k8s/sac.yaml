@@ -46,7 +46,7 @@ spec:
         - name: SAC_TYPE
           value: master
         - name: SAC_URL
-          value: http://{SAC_MSTR_NAME}.default.svc.cluster.local
+          value: http://{SAC_MSTR_NAME}.{SAC_NS}.svc.cluster.local
         - name: EC_PORT
           value: :7990
         - name: EC_CID
@@ -100,11 +100,11 @@ spec:
         image: ghcr.io/ec-release/sac:slave
         env:
         - name: SAC_URL_MST
-          value: http://{SAC_MSTR_NAME}.default.svc.cluster.local
+          value: http://{SAC_MSTR_NAME}.{SAC_NS}.svc.cluster.local
         - name: SAC_TYPE
           value: slave
         - name: SAC_URL
-          value: http://{SAC_SLAV_NAME}.default.svc.cluster.local
+          value: http://{SAC_SLAV_NAME}.{SAC_NS}.svc.cluster.local
         - name: EC_PORT
           value: :7990
         - name: EC_CID
