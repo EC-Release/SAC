@@ -15,8 +15,8 @@ kubectl config view && kubectl get pods && {
     
     read -p "EC_CID: " cid
     read -p "EC_CSC: " csc
-    EC_CID=$(printf '%s' "$cid" | base64 | tr '\n' ' ')
-    EC_CSC=$(printf '%s' "$csc" | base64 | tr '\n' ' ')
+    EC_CID=$(printf '%s' "$cid" | base64 -w0)
+    EC_CSC=$(printf '%s' "$csc" | base64 -w0)
     
     K8_SECRT_NAME="ec-secret"
     SAC_MSTR_NAME="sac-mstr"
