@@ -22,6 +22,7 @@ kubectl config view && kubectl get pods && {
     SAC_MSTR_NAME="sac-mstr"
     SAC_SLAV_NAME="sac-slav"
     SVC_APP_NAME="svc"
+    SAC_NS="default"
     
     EC_ADM_TKN="my-legacy-admin-token"
     EC_SETTING=$(printf '{"%s":{"ids":["my-aid-1","my-aid-2"],"trustedIssuerIds":["legacy-cf-uaa-url"]}}' "$EC_SVC_ID" | base64 | tr '\n' ' ') 
@@ -42,6 +43,7 @@ kubectl config view && kubectl get pods && {
     sed -i "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" sac.yaml
     sed -i "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" sac.yaml
     sed -i "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" sac.yaml
+    sed -i "s|{SAC_NS}|$SAC_NS|g" sac.yaml
     
     curl -Ss -o svc1.1.yml https://raw.githubusercontent.com/ayasuda-ge/service1.x/1.1/k8s/svc1.1.yml
     sed -i "s|{EC_CID}|$EC_CID|g" svc1.1.yml
@@ -50,6 +52,7 @@ kubectl config view && kubectl get pods && {
     sed -i "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" svc1.1.yml
     sed -i "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" svc1.1.yml
     sed -i "s|{SVC_APP_NAME}|$SVC_APP_NAME|g" svc1.1.yml
+    sed -i "s|{SAC_NS}|$SAC_NS|g" svc1.1.yml
     
     sed -i "s|{EC_ADM_TKN}|$EC_ADM_TKN|g" svc1.1.yml
     sed -i "s|{EC_SETTING}|$EC_SETTING|g" svc1.1.yml
