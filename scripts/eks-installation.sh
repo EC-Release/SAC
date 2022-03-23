@@ -15,7 +15,7 @@ kubectl config view && kubectl get pods && {
     
     read cid"?EC_CID: "
     read csc"?EC_CSC: "
-    read nsc"?Namespace? "
+    read nsc"?Namespace: "
     
     #read -p "EC_CID: " cid
     #read -p "EC_CSC: " csc
