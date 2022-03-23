@@ -11,7 +11,10 @@ jobs:
       MY_MASTER_TAG: ${{secrets.MY_MASTER_TAG}}
       MY_SLAVE_TAG: ${{secrets.MY_SLAVE_TAG}}
       SAC_MASTER_TAG: "ghcr.io/ec-release/sac:master"
+      SAC_MASTER_EKS_TAG: "ghcr.io/ec-release/sac:master-eks"
       SAC_SLAVE_TAG: "ghcr.io/ec-release/sac:slave"
+      SAC_SLAVE_EKS_TAG: "ghcr.io/ec-release/sac:master-eks"
+      
     steps:
       - uses: actions/checkout@v2
 
@@ -27,6 +30,10 @@ jobs:
         run: |
           echo $MY_REGISTRY_TKN | docker login $MY_REGISTRY -u $MY_REGISTRY_ID --password-stdin
           docker tag $MY_MASTER_TAG $SAC_MASTER_TAG
+          docker tag $MY_MASTER_TAG $SAC_MASTER_EKS_TAG
           docker tag $MY_SLAVE_TAG $SAC_SLAVE_TAG
+          docker tag $MY_SLAVE_TAG $SAC_SLAVE_EKS_TAG
           docker push $SAC_MASTER_TAG
           docker push $SAC_SLAVE_TAG
+          docker push $SAC_MASTER_EKS_TAG
+          docker push $SAC_SLAVE_EKS_TAG
