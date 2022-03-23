@@ -13,7 +13,7 @@ jobs:
       SAC_MASTER_TAG: "ghcr.io/ec-release/sac:master"
       SAC_MASTER_EKS_TAG: "ghcr.io/ec-release/sac:master-eks"
       SAC_SLAVE_TAG: "ghcr.io/ec-release/sac:slave"
-      SAC_SLAVE_EKS_TAG: "ghcr.io/ec-release/sac:master-eks"
+      SAC_SLAVE_EKS_TAG: "ghcr.io/ec-release/sac:slave-eks"
       
     steps:
       - uses: actions/checkout@v2
