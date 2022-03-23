@@ -37,23 +37,23 @@ kubectl config view && kubectl get pods && {
     kubectl delete secrets "$K8_SECRT_NAME"
     
     curl -Ss -o sac.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/sac.yaml
-    sed -i "" "s|{EC_CID}|$EC_CID|g" sac.yaml
-    sed -i "" "s|{EC_CSC}|$EC_CSC|g" sac.yaml
-    sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" sac.yaml
-    sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" sac.yaml
-    sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" sac.yaml
+    sed -i "s|{EC_CID}|$EC_CID|g" sac.yaml
+    sed -i "s|{EC_CSC}|$EC_CSC|g" sac.yaml
+    sed -i "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" sac.yaml
+    sed -i "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" sac.yaml
+    sed -i "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" sac.yaml
     
     curl -Ss -o svc1.1.yml https://raw.githubusercontent.com/ayasuda-ge/service1.x/1.1/k8s/svc1.1.yml
-    sed -i "" "s|{EC_CID}|$EC_CID|g" svc1.1.yml
-    sed -i "" "s|{EC_CSC}|$EC_CSC|g" svc1.1.yml
-    sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" svc1.1.yml
-    sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" svc1.1.yml
-    sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" svc1.1.yml
-    sed -i "" "s|{SVC_APP_NAME}|$SVC_APP_NAME|g" svc1.1.yml
+    sed -i "s|{EC_CID}|$EC_CID|g" svc1.1.yml
+    sed -i "s|{EC_CSC}|$EC_CSC|g" svc1.1.yml
+    sed -i "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" svc1.1.yml
+    sed -i "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" svc1.1.yml
+    sed -i "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" svc1.1.yml
+    sed -i "s|{SVC_APP_NAME}|$SVC_APP_NAME|g" svc1.1.yml
     
-    sed -i "" "s|{EC_ADM_TKN}|$EC_ADM_TKN|g" svc1.1.yml
-    sed -i "" "s|{EC_SETTING}|$EC_SETTING|g" svc1.1.yml
-    sed -i "" "s|{EC_SVC_ID}|$EC_SVC_ID|g" svc1.1.yml
+    sed -i "s|{EC_ADM_TKN}|$EC_ADM_TKN|g" svc1.1.yml
+    sed -i "s|{EC_SETTING}|$EC_SETTING|g" svc1.1.yml
+    sed -i "s|{EC_SVC_ID}|$EC_SVC_ID|g" svc1.1.yml
     
     kubectl apply -f sac.yaml
     
