@@ -61,7 +61,7 @@ kubectl config view && kubectl get pods && {
     sleep 15
     kubectl apply -f svc1.1.yml
     
-    exit 0
+    return 0
 }
 
 echo failed k8 deployment
