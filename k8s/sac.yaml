@@ -43,7 +43,7 @@ spec:
         - name: sac-master-mount
           persistentVolumeClaim:
             claimName: {ClaimName}
-      containers:        
+      containers:
       - name: {SAC_MSTR_NAME}-cntr
         volumeMounts:
           - name: sac-master-mount
@@ -107,12 +107,12 @@ spec:
         - name: sac-slave-mount
           persistentVolumeClaim:
             claimName: {ClaimName}
-      containers:
+      containers:            
+      - name: {SAC_SLAV_NAME}-cntr
         volumeMounts:
           - name: sac-slave-mount
             mountPath: /root/.ec
-            subPath: sac/slave      
-      - name: {SAC_SLAV_NAME}-cntr
+            subPath: sac/slave
         image: ghcr.io/ec-release/sac:slave-eks
         env:
         - name: SAC_URL_MST
