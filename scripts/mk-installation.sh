@@ -36,6 +36,7 @@ kubectl config view && kubectl get pods && {
     kubectl delete deployments "$SAC_SLAV_NAME"
     kubectl delete svc "$SAC_SLAV_NAME"
     kubectl delete secrets "$K8_SECRT_NAME"
+    kubectl delete pods agt
     
     curl -Ss -o sac.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/sac.yaml
     sed -i "s|{EC_CID}|$EC_CID|g" sac.yaml
