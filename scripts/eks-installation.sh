@@ -17,9 +17,11 @@ kubectl config view && kubectl get pods && {
     #read csc"?EC_CSC: "
     #read nsc"?Namespace: "
     
-    read -p "EC_CID?: " cid
-    read -p "EC_CSC?: " csc
-    read -p "Namespace?: " nsc
+    read -p "EC_CID: " cid
+    read -p "EC_CSC: " csc
+    read -p "Namespace: " nsc
+    read -p "ClaimName: " ClaimName
+    
     
     #read -p "EC_CID: " cid
     #read -p "EC_CSC: " csc
@@ -39,11 +41,11 @@ kubectl config view && kubectl get pods && {
     kubectl delete ingress "${SVC_APP_NAME}"-igs
     kubectl delete deployments "$SVC_APP_NAME"
     kubectl delete svc "$SVC_APP_NAME"
-    #kubectl delete deployments "$SAC_MSTR_NAME"
-    #kubectl delete svc "$SAC_MSTR_NAME"
-    #kubectl delete deployments "$SAC_SLAV_NAME"
-    #kubectl delete svc "$SAC_SLAV_NAME"
-    #kubectl delete secrets "$K8_SECRT_NAME"
+    kubectl delete deployments "$SAC_MSTR_NAME"
+    kubectl delete svc "$SAC_MSTR_NAME"
+    kubectl delete deployments "$SAC_SLAV_NAME"
+    kubectl delete svc "$SAC_SLAV_NAME"
+    kubectl delete secrets "$K8_SECRT_NAME"
     
     curl -Ss -o sac.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/sac.yaml
     sed -i "" "s|{EC_CID}|$EC_CID|g" sac.yaml
@@ -52,6 +54,7 @@ kubectl config view && kubectl get pods && {
     sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" sac.yaml
     sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" sac.yaml
     sed -i "" "s|{SAC_NS}|$SAC_NS|g" sac.yaml
+    sed -i "" "s|{ClaimName}|$ClaimName|g" sac.yaml    
     
     curl -Ss -o svc1.1.yml https://raw.githubusercontent.com/ayasuda-ge/service1.x/1.1/k8s/svc1.1.yml
     sed -i "" "s|{EC_CID}|$EC_CID|g" svc1.1.yml
@@ -61,18 +64,19 @@ kubectl config view && kubectl get pods && {
     sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" svc1.1.yml
     sed -i "" "s|{SVC_APP_NAME}|$SVC_APP_NAME|g" svc1.1.yml
     sed -i "" "s|{SAC_NS}|$SAC_NS|g" svc1.1.yml
+    sed -i "" "s|{ClaimName}|$ClaimName|g" svc1.1.yml
     
     sed -i "" "s|{EC_ADM_TKN}|$EC_ADM_TKN|g" svc1.1.yml
     sed -i "" "s|{EC_SETTING}|$EC_SETTING|g" svc1.1.yml
     sed -i "" "s|{EC_SVC_ID}|$EC_SVC_ID|g" svc1.1.yml
     
-    #kubectl apply -f sac.yaml
+    kubectl apply -f sac.yaml
     
-    #echo completing svc1.1 bootstrap ..
-    #sleep 15
+    echo completing svc1.1 bootstrap ..
+    sleep 15
     kubectl apply -f svc1.1.yml
     
-    #exit 0
+    exit 0
 }
 
 echo failed k8 deployment
