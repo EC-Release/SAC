@@ -17,24 +17,25 @@ kubectl config view && kubectl get pods && {
     #read csc"?EC_CSC: "
     #read nsc"?Namespace: "
     
-    read -p "EC_CID: " cid
-    read -p "EC_CSC: " csc
+    #read -p "EC_CID: " cid
+    #read -p "EC_CSC: " csc
     read -p "Namespace: " nsc
     read -p "ClaimName: " ClaimName
     read -p "EC_SVC_ID: " EC_SVC_ID
+    read -p "EC_SVC_URL: " EC_SVC_URL
     read -p "EC_SETTING: " EC_SETTING
     read -p "EC_ADM_TKN: " EC_ADM_TKN
     
     
     #read -p "EC_CID: " cid
     #read -p "EC_CSC: " csc
-    EC_CID=$(printf '%s' "$cid" | base64 | tr '\n' ' ')
-    EC_CSC=$(printf '%s' "$csc" | base64 | tr '\n' ' ')
+    #EC_CID=$(printf '%s' "$cid" | base64 | tr '\n' ' ')
+    #EC_CSC=$(printf '%s' "$csc" | base64 | tr '\n' ' ')
     
     K8_SECRT_NAME="ec-secret"
     SAC_MSTR_NAME="sac-mstr"
     SAC_SLAV_NAME="sac-slav"
-    SVC_APP_NAME="svc"
+    SVC_APP_NAME="$EC_SVC_ID"
     SAC_NS="$nsc"
     
     #EC_ADM_TKN="my-legacy-admin-token"
@@ -44,20 +45,7 @@ kubectl config view && kubectl get pods && {
     kubectl delete ingress "${SVC_APP_NAME}"-igs
     kubectl delete deployments "$SVC_APP_NAME"
     kubectl delete svc "$SVC_APP_NAME"
-    kubectl delete deployments "$SAC_MSTR_NAME"
-    kubectl delete svc "$SAC_MSTR_NAME"
-    kubectl delete deployments "$SAC_SLAV_NAME"
-    kubectl delete svc "$SAC_SLAV_NAME"
-    kubectl delete secrets "$K8_SECRT_NAME"
-    
-    curl -Ss -o sac.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/sac.yaml
-    sed -i "" "s|{EC_CID}|$EC_CID|g" sac.yaml
-    sed -i "" "s|{EC_CSC}|$EC_CSC|g" sac.yaml
-    sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" sac.yaml
-    sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" sac.yaml
-    sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" sac.yaml
-    sed -i "" "s|{SAC_NS}|$SAC_NS|g" sac.yaml
-    sed -i "" "s|{ClaimName}|$ClaimName|g" sac.yaml    
+       
     
     curl -Ss -o svc1.1.yml https://raw.githubusercontent.com/ayasuda-ge/service1.x/1.1/k8s/svc1.1.yml
     sed -i "" "s|{EC_CID}|$EC_CID|g" svc1.1.yml
