@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
       - name: {SAC_MSTR_NAME}-cntr
-        image: ghcr.io/ec-release/sac:master
+        image: ghcr.io/ec-release/sac:master-eks
         env:
         - name: SAC_TYPE
           value: master
@@ -97,7 +97,7 @@ spec:
     spec:
       containers:
       - name: {SAC_SLAV_NAME}-cntr
-        image: ghcr.io/ec-release/sac:slave
+        image: ghcr.io/ec-release/sac:slave-eks
         env:
         - name: SAC_URL_MST
           value: http://{SAC_MSTR_NAME}.{SAC_NS}.svc.cluster.local
