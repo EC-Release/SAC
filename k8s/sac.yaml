@@ -39,8 +39,16 @@ spec:
       labels:
         run: {SAC_MSTR_NAME}
     spec:
-      containers:
+      volumes:
+        - name: sac-master-mount
+          persistentVolumeClaim:
+            claimName: ec-eng-efs-pvc
+      containers:        
       - name: {SAC_MSTR_NAME}-cntr
+        volumeMounts:
+          - name: sac-master-mount
+            mountPath: /root/.ec
+            subPath: sac/master
         image: ghcr.io/ec-release/sac:master-eks
         env:
         - name: SAC_TYPE
@@ -95,7 +103,15 @@ spec:
       labels:
         run: {SAC_SLAV_NAME}
     spec:
+      volumes:
+        - name: sac-slave-mount
+          persistentVolumeClaim:
+            claimName: ec-eng-efs-pvc
       containers:
+        volumeMounts:
+          - name: sac-slave-mount
+            mountPath: /root/.ec
+            subPath: sac/slave      
       - name: {SAC_SLAV_NAME}-cntr
         image: ghcr.io/ec-release/sac:slave-eks
         env:
