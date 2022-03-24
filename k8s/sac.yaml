@@ -42,7 +42,7 @@ spec:
       volumes:
         - name: sac-master-mount
           persistentVolumeClaim:
-            claimName: ec-eng-efs-pvc
+            claimName: {ClaimName}
       containers:        
       - name: {SAC_MSTR_NAME}-cntr
         volumeMounts:
@@ -106,7 +106,7 @@ spec:
       volumes:
         - name: sac-slave-mount
           persistentVolumeClaim:
-            claimName: ec-eng-efs-pvc
+            claimName: {ClaimName}
       containers:
         volumeMounts:
           - name: sac-slave-mount
