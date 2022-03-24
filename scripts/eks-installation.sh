@@ -21,6 +21,9 @@ kubectl config view && kubectl get pods && {
     read -p "EC_CSC: " csc
     read -p "Namespace: " nsc
     read -p "ClaimName: " ClaimName
+    read -p "EC_SVC_ID: " EC_SVC_ID
+    read -p "EC_SETTING: " EC_SETTING
+    read -p "EC_ADM_TKN: " EC_ADM_TKN
     
     
     #read -p "EC_CID: " cid
@@ -34,9 +37,9 @@ kubectl config view && kubectl get pods && {
     SVC_APP_NAME="svc"
     SAC_NS="$nsc"
     
-    EC_ADM_TKN="my-legacy-admin-token"
-    EC_SETTING=$(printf '{"%s":{"ids":["my-aid-1","my-aid-2"],"trustedIssuerIds":["legacy-cf-uaa-url"]}}' "$EC_SVC_ID" | base64 | tr '\n' ' ') 
-    EC_SVC_ID="my-test-id"
+    #EC_ADM_TKN="my-legacy-admin-token"
+    #EC_SETTING=$(printf '{"%s":{"ids":["my-aid-1","my-aid-2"],"trustedIssuerIds":["legacy-cf-uaa-url"]}}' "$EC_SVC_ID" | base64 | tr '\n' ' ') 
+    #EC_SVC_ID="EC_SVC_ID"
 
     kubectl delete ingress "${SVC_APP_NAME}"-igs
     kubectl delete deployments "$SVC_APP_NAME"
