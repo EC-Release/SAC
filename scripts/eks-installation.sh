@@ -39,11 +39,11 @@ kubectl config view && kubectl get pods && {
     kubectl delete ingress "${SVC_APP_NAME}"-igs
     kubectl delete deployments "$SVC_APP_NAME"
     kubectl delete svc "$SVC_APP_NAME"
-    kubectl delete deployments "$SAC_MSTR_NAME"
-    kubectl delete svc "$SAC_MSTR_NAME"
-    kubectl delete deployments "$SAC_SLAV_NAME"
-    kubectl delete svc "$SAC_SLAV_NAME"
-    kubectl delete secrets "$K8_SECRT_NAME"
+    #kubectl delete deployments "$SAC_MSTR_NAME"
+    #kubectl delete svc "$SAC_MSTR_NAME"
+    #kubectl delete deployments "$SAC_SLAV_NAME"
+    #kubectl delete svc "$SAC_SLAV_NAME"
+    #kubectl delete secrets "$K8_SECRT_NAME"
     
     curl -Ss -o sac.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/sac.yaml
     sed -i "" "s|{EC_CID}|$EC_CID|g" sac.yaml
@@ -66,10 +66,10 @@ kubectl config view && kubectl get pods && {
     sed -i "" "s|{EC_SETTING}|$EC_SETTING|g" svc1.1.yml
     sed -i "" "s|{EC_SVC_ID}|$EC_SVC_ID|g" svc1.1.yml
     
-    kubectl apply -f sac.yaml
+    #kubectl apply -f sac.yaml
     
-    echo completing svc1.1 bootstrap ..
-    sleep 15
+    #echo completing svc1.1 bootstrap ..
+    #sleep 15
     kubectl apply -f svc1.1.yml
     
     #exit 0
