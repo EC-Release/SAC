@@ -23,7 +23,7 @@ kubectl config view && kubectl get pods && {
     SAC_NS="default"
     
     EC_ADM_TKN="$3"
-    EC_SVC_ID="my-test-id"
+    EC_SVC_ID="$4"
     EC_SETTING=$(printf '{"%s":{"ids":["my-aid-1","my-aid-2"],"trustedIssuerIds":["legacy-cf-uaa-url"]}}' "$EC_SVC_ID" | base64 | tr '\n' ' ') 
     
 
