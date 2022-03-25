@@ -13,30 +13,19 @@
 
 kubectl config view && kubectl get pods && {
     
-    #read cid"?EC_CID: "
-    #read csc"?EC_CSC: "
-    #read nsc"?Namespace: "
+    read EC_CID"?EC_CID: "
+    read EC_CSC"?EC_CSC: "
+    read SAC_NS"?Namespace: "
+    read ClaimName"?ClaimName: "
+    read EC_SVC_ID"?EC_SVC_ID: "
+    read EC_SVC_URL"?EC_SVC_URL: "
+    read EC_SETTING"?EC_SETTING: "
+    read EC_ADM_TKN"?EC_ADM_TKN: "
+    read K8_SECRT_NAME"?K8_SECRT_NAME: "
     
-    #read -p "EC_CID: " cid
-    #read -p "EC_CSC: " csc
-    read -p "Namespace: " nsc
-    read -p "ClaimName: " ClaimName
-    read -p "EC_SVC_ID: " EC_SVC_ID
-    read -p "EC_SVC_URL: " EC_SVC_URL
-    read -p "EC_SETTING: " EC_SETTING
-    read -p "EC_ADM_TKN: " EC_ADM_TKN
-    
-    
-    #read -p "EC_CID: " cid
-    #read -p "EC_CSC: " csc
-    #EC_CID=$(printf '%s' "$cid" | base64 | tr '\n' ' ')
-    #EC_CSC=$(printf '%s' "$csc" | base64 | tr '\n' ' ')
-    
-    K8_SECRT_NAME="ec-secret"
     SAC_MSTR_NAME="sac-mstr"
     SAC_SLAV_NAME="sac-slav"
-    SVC_APP_NAME="$EC_SVC_ID"
-    SAC_NS="$nsc"
+    SVC_APP_NAME=svc-"$EC_SVC_ID"
     
     #EC_ADM_TKN="my-legacy-admin-token"
     #EC_SETTING=$(printf '{"%s":{"ids":["my-aid-1","my-aid-2"],"trustedIssuerIds":["legacy-cf-uaa-url"]}}' "$EC_SVC_ID" | base64 | tr '\n' ' ') 
@@ -60,6 +49,7 @@ kubectl config view && kubectl get pods && {
     sed -i "" "s|{EC_ADM_TKN}|$EC_ADM_TKN|g" svc1.1.yml
     sed -i "" "s|{EC_SETTING}|$EC_SETTING|g" svc1.1.yml
     sed -i "" "s|{EC_SVC_ID}|$EC_SVC_ID|g" svc1.1.yml
+    sed -i "" "s|{EC_SVC_URL}|$EC_SVC_URL|g" svc1.1.yml    
     
     kubectl apply -f sac.yaml
     
