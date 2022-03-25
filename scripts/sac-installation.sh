@@ -13,8 +13,8 @@
 
 kubectl config view && kubectl get pods && {
     
-    read cid"?EC_CID: "
-    read csc"?EC_CSC: "
+    read EC_CID"?EC_CID: "
+    read EC_CSC"?EC_CSC: "
     read SAC_NS"?Namespace: "
     read ClaimName"?ClaimName: "
     read K8_SECRT_NAME"?K8_SECRT_NAME: "
