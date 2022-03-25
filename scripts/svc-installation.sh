@@ -31,7 +31,7 @@ kubectl config view && kubectl get pods && {
     #EC_SETTING=$(printf '{"%s":{"ids":["my-aid-1","my-aid-2"],"trustedIssuerIds":["legacy-cf-uaa-url"]}}' "$EC_SVC_ID" | base64 | tr '\n' ' ') 
     #EC_SVC_ID="EC_SVC_ID"
 
-    kubectl delete ingress "${SVC_APP_NAME}"-igs
+    #kubectl delete ingress "${SVC_APP_NAME}"-igs
     kubectl delete deployments "$SVC_APP_NAME"
     kubectl delete svc "$SVC_APP_NAME"
        
