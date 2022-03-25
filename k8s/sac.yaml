@@ -39,16 +39,16 @@ spec:
       labels:
         run: {SAC_MSTR_NAME}
     spec:
-      volumes:
-        - name: sac-master-mount
-          persistentVolumeClaim:
-            claimName: {ClaimName}
+      #volumes:
+      #  - name: sac-master-mount
+      #    persistentVolumeClaim:
+      #      claimName: {ClaimName}
       containers:
       - name: {SAC_MSTR_NAME}-cntr
-        volumeMounts:
-          - name: sac-master-mount
-            mountPath: /root/.ec
-            subPath: sac/master
+        #volumeMounts:
+        #  - name: sac-master-mount
+        #    mountPath: /root/.ec
+        #    subPath: sac/master
         image: ghcr.io/ec-release/sac:master-eks
         env:
         - name: SAC_TYPE
@@ -103,16 +103,16 @@ spec:
       labels:
         run: {SAC_SLAV_NAME}
     spec:
-      volumes:
-        - name: sac-slave-mount
-          persistentVolumeClaim:
-            claimName: {ClaimName}
+      #volumes:
+      #  - name: sac-slave-mount
+      #    persistentVolumeClaim:
+      #      claimName: {ClaimName}
       containers:            
       - name: {SAC_SLAV_NAME}-cntr
-        volumeMounts:
-          - name: sac-slave-mount
-            mountPath: /root/.ec
-            subPath: sac/slave
+        #volumeMounts:
+        #  - name: sac-slave-mount
+        #    mountPath: /root/.ec
+        #    subPath: sac/slave
         image: ghcr.io/ec-release/sac:slave-eks
         env:
         - name: SAC_URL_MST
