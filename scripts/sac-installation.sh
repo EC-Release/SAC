@@ -17,8 +17,8 @@ kubectl config view && kubectl get pods && {
     #read csc"?EC_CSC: "
     #read nsc"?Namespace: "
     
-    #read -p "EC_CID: " cid
-    #read -p "EC_CSC: " csc
+    read -p "EC_CID: " cid
+    read -p "EC_CSC: " csc
     read -p "Namespace: " SAC_NS
     read -p "ClaimName: " ClaimName
     read -p "K8_SECRT_NAME: " K8_SECRT_NAME
@@ -45,8 +45,8 @@ kubectl config view && kubectl get pods && {
     #kubectl delete secrets "$K8_SECRT_NAME"
     
     curl -Ss -o sac.yaml https://raw.githubusercontent.com/ayasuda-ge/sac/main/k8s/sac.yaml
-    #sed -i "" "s|{EC_CID}|$EC_CID|g" sac.yaml
-    #sed -i "" "s|{EC_CSC}|$EC_CSC|g" sac.yaml
+    sed -i "" "s|{EC_CID}|$EC_CID|g" sac.yaml
+    sed -i "" "s|{EC_CSC}|$EC_CSC|g" sac.yaml
     sed -i "" "s|{K8_SECRT_NAME}|$K8_SECRT_NAME|g" sac.yaml
     sed -i "" "s|{SAC_MSTR_NAME}|$SAC_MSTR_NAME|g" sac.yaml
     sed -i "" "s|{SAC_SLAV_NAME}|$SAC_SLAV_NAME|g" sac.yaml
