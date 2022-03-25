@@ -51,7 +51,7 @@ kubectl config view && kubectl get pods && {
     sed -i "" "s|{EC_SVC_ID}|$EC_SVC_ID|g" svc1.1.yml
     sed -i "" "s|{EC_SVC_URL}|$EC_SVC_URL|g" svc1.1.yml    
     
-    kubectl apply -f sac.yaml
+    #kubectl apply -f sac.yaml
     
     echo completing svc1.1 bootstrap ..
     sleep 15
