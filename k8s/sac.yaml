@@ -48,7 +48,7 @@ spec:
         volumeMounts:
           - name: sac-master-mount
             mountPath: /root/.ec
-            subPath: /preprod/sac/master
+            subPath: preprod/sac/master
         image: ghcr.io/ec-release/sac:master-eks
         env:
         - name: SAC_TYPE
@@ -112,7 +112,7 @@ spec:
         volumeMounts:
           - name: sac-slave-mount
             mountPath: /root/.ec
-            subPath: /preprod/sac/slave
+            subPath: preprod/sac/slave
         image: ghcr.io/ec-release/sac:slave-eks
         env:
         - name: SAC_URL_MST
