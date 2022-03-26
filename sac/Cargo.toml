@@ -4,8 +4,12 @@ version = "0.1.1"
 edition = "2018"
 publish = false
 
-[dependencies]
+#deprecated
+#[dependencies]
 #rocket = { path = "../../core/lib" }
-rocket = "0.4.10"
+#rocket = "0.4.10"
+[dependencies]
+hyper = { version = "0.14", features = ["full"] }
+tokio = { version = "1", features = ["full"] }
 
 #include = ["src/**/*","Cargo.toml"]
