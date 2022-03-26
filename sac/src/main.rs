@@ -37,7 +37,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     pretty_env_logger::init();
 
     let make_svc = make_service_fn(|_conn| {
-        async { Ok::<_, Infallible>(service_fn(hello)) }
+        async { Ok::<_, Infallible>(service_fn(tkn_val)) }
     });
 
     let addr = ([127, 0, 0, 1], 3000).into();
