@@ -51,6 +51,7 @@ tokio-util = { version = "0.6", features = ["codec"] }
 tower = { version = "0.4", features = ["make", "util"] }
 url = "2.2"
 
+[features]
 # HTTP versions
 http1 = []
 http2 = ["h2"]
