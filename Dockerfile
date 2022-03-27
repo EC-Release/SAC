@@ -18,11 +18,11 @@ COPY ./Cargo.toml ./
 COPY ./sac/ ./sac/
 
 RUN rustup override set nightly && \
-cargo build --release --all-features && tree ./
+cargo build --release --all-features
 
 RUN echo 'export PATH=$PATH:$HOME/.ec' >> /etc/profile && apt-get update && apt-get install -y wget tree bash && \
 mkdir -p ~/.ec && echo '#!/bin/bash' > ./~sac && \
 echo 'source <(wget -q -O - https://raw.githubusercontent.com/ayasuda-ge/sac/main/index.sh) "$@"' >> ./~sac && \
-chmod +x ./~sac  
+chmod +x ./~sac && tree ./
 
 ENTRYPOINT ["./~sac"]
