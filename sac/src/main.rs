@@ -44,7 +44,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     let server = Server::bind(&addr).serve(make_svc);
 
-    println!("[EC Inf] listening on http://{}", addr);
+    info!("[EC Inf] listening on http://{}", addr);
 
     server.await?;
 
