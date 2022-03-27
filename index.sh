@@ -1,2 +1,11 @@
 #!/bin/bash
-source <(wget -O - https://raw.githubusercontent.com/EC-Release/sdk/disty/scripts/qa/rust.v2-sac.sh)
+
+if [ ! -d ./sac ]; then
+  exit -1
+fi
+
+cargo build --release --all-features
+#cargo doc
+#cargo run --example hello
+
+
