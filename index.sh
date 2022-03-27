@@ -5,6 +5,8 @@ if [ ! -d ./sac ]; then
 fi
 
 cargo run -- --test
+
+[[ -f ./~sac ]] && rm sac
 #cargo build --release --all-features
 #cargo doc
 #cargo run --example hello
