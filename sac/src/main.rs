@@ -27,6 +27,7 @@ use std::convert::Infallible;
 
 use hyper::service::{make_service_fn, service_fn};
 use hyper::{Body, Request, Response, Server};
+use log::{info};
 
 async fn tkn_val(_: Request<Body>) -> Result<Response<Body>, Infallible> {
     Ok(Response::new(Body::from("PERMITTED")))
