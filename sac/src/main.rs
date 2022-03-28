@@ -10,17 +10,6 @@
  * author: apolo.yasuda@ge.com; apolo.yasuda.ge@gmail.com
  */
 
-// deprecated for async
-/*
-use std::env;
-#![feature(proc_macro_hygiene, decl_macro)]
-#[macro_use] extern crate rocket;
-
-#[get("/<name>/<age>")]
-fn hello(name: String, age: u8) -> String {
-    format!("Hello, {} year old named {}!", age, name)
-}*/
-
 #![deny(warnings)]
 
 use std::convert::Infallible;
@@ -51,6 +40,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     Ok(())
 }
+
 //fn main() {
     
     //get owner hash
