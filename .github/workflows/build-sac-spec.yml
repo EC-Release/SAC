@@ -1,0 +1,39 @@
+name: Publish SAC Specs
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    environment: dev
+    env:
+      MY_MASTER_TAG: ${{secrets.MY_MASTER_TAG}}
+      MY_SLAVE_TAG: ${{secrets.MY_SLAVE_TAG}}
+      SAC_MASTER_TAG: "ghcr.io/ec-release/sac:master"
+      SAC_MASTER_EKS_TAG: "ghcr.io/ec-release/sac:master-eks"
+      SAC_SLAVE_TAG: "ghcr.io/ec-release/sac:slave"
+      SAC_SLAVE_EKS_TAG: "ghcr.io/ec-release/sac:slave-eks"
+      
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Container Img Building
+        run: |
+          docker pull "$MY_MASTER_TAG"
+          docker pull "$MY_SLAVE_TAG"
+      - name: Container Images Deployment
+        env:
+          MY_REGISTRY_ID: ${{secrets.MY_GITHUB_ID}}
+          MY_REGISTRY_TKN: ${{secrets.MY_GITHUB_TKN}}
+          MY_REGISTRY: "https://ghcr.io"
+        run: |
+          echo $MY_REGISTRY_TKN | docker login $MY_REGISTRY -u $MY_REGISTRY_ID --password-stdin
+          docker tag $MY_MASTER_TAG $SAC_MASTER_TAG
+          docker tag $MY_MASTER_TAG $SAC_MASTER_EKS_TAG
+          docker tag $MY_SLAVE_TAG $SAC_SLAVE_TAG
+          docker tag $MY_SLAVE_TAG $SAC_SLAVE_EKS_TAG
+          docker push $SAC_MASTER_TAG
+          docker push $SAC_SLAVE_TAG
+          docker push $SAC_MASTER_EKS_TAG
+          docker push $SAC_SLAVE_EKS_TAG

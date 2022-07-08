@@ -1,71 +1,60 @@
-use rocket::local::blocking::Client;
-use rocket::http::{RawStr, Status};
+/*
+ * Copyright (c) 2022 General Electric Company. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * General Electric Company. The software may be used and/or copied only
+ * with the written permission of General Electric Company or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * underch the software has been supplied.
+ *
+ * author: apolo.yasuda@ge.com; apolo.yasuda.ge@gmail.com
+ */
+
+use std::env;
+
+use hyper::{body::HttpBody as _, Client};
+use tokio::io::{self, AsyncWriteExt as _};
+
+// A simple type alias so as to DRY.
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
 
 #[test]
-fn hello() {
-    let langs = &["", "ru", "%D1%80%D1%83", "en", "unknown"];
-    let ex_lang = &["Hi", "Привет", "Привет", "Hello", "Hi"];
+fn get_basic_sac_response() -> Result<()> {
+    pretty_env_logger::init();
 
-    let emojis = &["", "on", "true", "false", "no", "yes", "off"];
-    let ex_emoji = &["", "👋 ", "👋 ", "", "", "👋 ", ""];
-
-    let names = &["", "Bob", "Bob+Smith"];
-    let ex_name = &["!", ", Bob!", ", Bob Smith!"];
-
-    let client = Client::tracked(super::rocket()).unwrap();
-    for n in 0..(langs.len() * emojis.len() * names.len()) {
-        let i = n / (emojis.len() * names.len());
-        let j = n % (emojis.len() * names.len()) / names.len();
-        let k = n % (emojis.len() * names.len()) % names.len();
-
-        let (lang, ex_lang) = (langs[i], ex_lang[i]);
-        let (emoji, ex_emoji) = (emojis[j], ex_emoji[j]);
-        let (name, ex_name) = (names[k], ex_name[k]);
-        let expected = format!("{}{}{}", ex_emoji, ex_lang, ex_name);
-
-        let q = |name, s: &str| match s.is_empty() {
-            true => "".into(),
-            false => format!("&{}={}", name, s)
-        };
-
-        let uri = format!("/?{}{}{}", q("lang", lang), q("emoji", emoji), q("name", name));
-        let response = client.get(uri).dispatch();
-        assert_eq!(response.into_string().unwrap(), expected);
-
-        let uri = format!("/?{}{}{}", q("emoji", emoji), q("name", name), q("lang", lang));
-        let response = client.get(uri).dispatch();
-        assert_eq!(response.into_string().unwrap(), expected);
-    }
-}
-
-#[test]
-fn hello_world() {
-    let client = Client::tracked(super::rocket()).unwrap();
-    let response = client.get("/hello/world").dispatch();
-    assert_eq!(response.into_string(), Some("Hello, world!".into()));
-}
-
-#[test]
-fn hello_mir() {
-    let client = Client::tracked(super::rocket()).unwrap();
-    let response = client.get("/hello/%D0%BC%D0%B8%D1%80").dispatch();
-    assert_eq!(response.into_string(), Some("Привет, мир!".into()));
-}
-
-#[test]
-fn wave() {
-    let client = Client::tracked(super::rocket()).unwrap();
-    for &(name, age) in &[("Bob%20Smith", 22), ("Michael", 80), ("A", 0), ("a", 127)] {
-        let uri = format!("/wave/{}/{}", name, age);
-        let real_name = RawStr::new(name).percent_decode_lossy();
-        let expected = format!("👋 Hello, {} year old named {}!", age, real_name);
-        let response = client.get(uri).dispatch();
-        assert_eq!(response.into_string().unwrap(), expected);
-
-        for bad_age in &["1000", "-1", "bird", "?"] {
-            let bad_uri = format!("/wave/{}/{}", name, bad_age);
-            let response = client.get(bad_uri).dispatch();
-            assert_eq!(response.status(), Status::NotFound);
+    let url = match env::args().nth(1) {
+        Some(url) => url,
+        None => {
+            println!("Usage: client <url>");
+            return Ok(());
         }
+    };
+
+    let url = url.parse::<hyper::Uri>().unwrap();
+    if url.scheme_str() != Some("http") {
+        println!("This example only works with 'http' URLs.");
+        return Ok(());
     }
+
+    fetch_url(url).await
+}
+
+async fn fetch_url(url: hyper::Uri) -> Result<()> {
+    let client = Client::new();
+
+    let mut res = client.get(url).await?;
+
+    println!("Response: {}", res.status());
+    println!("Headers: {:#?}\n", res.headers());
+
+    // Stream the body, writing each chunk to stdout as we get it
+    // (instead of buffering and printing at the end).
+    while let Some(next) = res.data().await {
+        let chunk = next?;
+        io::stdout().write_all(&chunk).await?;
+    }
+
+    println!("\n\nDone!");
+
+    Ok(())
 }

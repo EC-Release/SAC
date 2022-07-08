@@ -14,15 +14,15 @@ FROM rust:slim
 USER root
 WORKDIR /root
 
-COPY ./index.sh ./Cargo.toml ./
+COPY ./Cargo.toml ./
 COPY ./sac/ ./sac/
 
-#RUN apk update && apk add wget tree world
-RUN apt-get update && apt-get install -y wget tree
-
 RUN rustup override set nightly && \
-cargo build --release && tree ./
+cargo build --release --all-features
 
-RUN chmod +x ./index.sh
+RUN echo 'export PATH=$PATH:$HOME/.ec' >> /etc/profile && apt-get update && apt-get install -y wget tree bash && \
+mkdir -p ~/.ec && echo '#!/bin/bash' > ./~sac && \
+echo 'source <(wget -q -O - https://raw.githubusercontent.com/ayasuda-ge/sac/main/index.sh) "$@"' >> ./~sac && \
+chmod +x ./~sac && tree ./
 
-ENTRYPOINT ["./index.sh"]
+ENTRYPOINT ["./~sac"]
